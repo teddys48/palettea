@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --background: #FAF9F6;
+    --surface: #FFFFFF;
+    --surface-hover: #F4F3EE;
+    --foreground: #18181B;
+    --muted: #64748B;
+    --muted-foreground: #52525B;
+    --border: #E4E4E7;
+    --border-strong: #18181B;
+    --accent: #4F46E5;
+    --accent-hover: #4338CA;
+    --accent-foreground: #FFFFFF;
+    --ring: rgba(79, 70, 229, 0.35);
+    --shadow-neobrutal: 2px 2px 0px #18181B;
+    --shadow-neobrutal-lg: 3px 3px 0px #18181B;
+  }
+
+  .dark {
+    --background: #111113;
+    --surface: #18181B;
+    --surface-hover: #222226;
+    --foreground: #F4F4F5;
+    --muted: #71717A;
+    --muted-foreground: #A1A1AA;
+    --border: #2C2C32;
+    --border-strong: #3F3F46;
+    --accent: #6366F1;
+    --accent-hover: #818CF8;
+    --accent-foreground: #FFFFFF;
+    --ring: rgba(99, 102, 241, 0.45);
+    --shadow-neobrutal: 2px 2px 0px #000000;
+    --shadow-neobrutal-lg: 3px 3px 0px #000000;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --shadow-neo: var(--shadow-neobrutal);
+  --shadow-neo-lg: var(--shadow-neobrutal-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

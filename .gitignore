@@ -1,0 +1,17 @@
+# Node / Bun
+node_modules/
+
+# Build output
+dist/
+.vite/
+
+# System / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.local
+
+# Svelte / TypeScript cache
+.svelte-kit/
+*.tsbuildinfo
