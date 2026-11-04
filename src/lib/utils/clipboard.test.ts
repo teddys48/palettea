@@ -36,6 +36,26 @@ describe('clipboard utility', () => {
     expect(written).toBe('#4F46E5');
   });
 
+  it('successfully copies multi-color palette hex list to clipboard', async () => {
+    let written = '';
+    const mockClipboard = {
+      writeText: async (text: string) => {
+        written = text;
+      },
+    };
+
+    Object.defineProperty(globalThis, 'navigator', {
+      value: { clipboard: mockClipboard },
+      configurable: true,
+      writable: true,
+    });
+
+    const paletteList = '#4F46E5, #E54670, #46E5BB, #E5D046, #6746E5';
+    const success = await copyToClipboard(paletteList);
+    expect(success).toBe(true);
+    expect(written).toBe(paletteList);
+  });
+
   it('returns false gracefully when clipboard operations fail', async () => {
     const mockClipboard = {
       writeText: async () => {

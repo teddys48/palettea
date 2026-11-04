@@ -7,7 +7,7 @@
   import type { Theme } from './lib/types';
 
   let currentTheme = $state<Theme>('light');
-  let activeNav = $state<string>('inspector');
+  let activeNav = $state<string>('generator');
 
   onMount(() => {
     currentTheme = getInitialTheme();
@@ -35,6 +35,10 @@
 
   function handleSelectNav(id: string) {
     activeNav = id;
+    const target = document.getElementById(`${id}-section`) || document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 </script>
 
@@ -47,7 +51,7 @@
   />
 
   <main class="flex-1 w-full" id="main-content">
-    <WorkspaceHero />
+    <WorkspaceHero {activeNav} onselectSection={handleSelectNav} />
   </main>
 
   <Footer />

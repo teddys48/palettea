@@ -22,6 +22,11 @@ declare module 'bun:test' {
     toBeFalsy(): void;
     toBeCloseTo(expected: number, precision?: number): void;
     toContain(item: any): void;
+    toMatch(expected: RegExp | string): void;
+    toBeGreaterThan(expected: number): void;
+    toBeLessThan(expected: number): void;
+    toBeGreaterThanOrEqual(expected: number): void;
+    toBeLessThanOrEqual(expected: number): void;
     toThrow(expected?: any): void;
     rejects: Matchers<T>;
     resolves: Matchers<T>;

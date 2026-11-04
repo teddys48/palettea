@@ -3,6 +3,7 @@ import {
   normalizeHex,
   formatHex,
   isValidHex,
+  getRandomHex,
   hexToRgb,
   getRelativeLuminance,
   getContrastColor,
@@ -80,6 +81,16 @@ describe('color-utils', () => {
       expect(isValidHex(null)).toBe(false);
       expect(isValidHex('#12345')).toBe(false);
       expect(isValidHex('xyz123')).toBe(false);
+    });
+  });
+
+  describe('getRandomHex', () => {
+    it('generates a valid 6-character hex string without leading #', () => {
+      for (let i = 0; i < 20; i++) {
+        const hex = getRandomHex();
+        expect(hex).toMatch(/^[0-9A-F]{6}$/);
+        expect(isValidHex(hex)).toBe(true);
+      }
     });
   });
 

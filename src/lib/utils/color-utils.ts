@@ -43,6 +43,18 @@ export function isValidHex(input: string | null | undefined): boolean {
 }
 
 /**
+ * Generates a random valid 6-character uppercase hex string (without '#').
+ */
+export function getRandomHex(): string {
+  const hexChars = '0123456789ABCDEF';
+  let hex = '';
+  for (let i = 0; i < 6; i++) {
+    hex += hexChars[Math.floor(Math.random() * 16)];
+  }
+  return hex;
+}
+
+/**
  * Parses a clean 6-digit hex into integer RGB components.
  */
 export function hexToRgb(hexInput: string): { r: number; g: number; b: number } | null {

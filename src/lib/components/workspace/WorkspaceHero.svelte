@@ -2,11 +2,21 @@
   import Check from 'lucide-svelte/icons/check';
   import Sparkles from 'lucide-svelte/icons/sparkles';
   import RefreshCw from 'lucide-svelte/icons/refresh-cw';
+  import Palette from 'lucide-svelte/icons/palette';
+  import Search from 'lucide-svelte/icons/search';
   import Button from '../ui/Button.svelte';
   import Badge from '../ui/Badge.svelte';
   import ColorInspector from '../color/ColorInspector.svelte';
+  import SchemeGenerator from '../scheme/SchemeGenerator.svelte';
   import ColorSwatchPreview from './ColorSwatchPreview.svelte';
   import type { PreviewPalette } from '../../types';
+
+  interface Props {
+    activeNav?: string;
+    onselectSection?: (id: string) => void;
+  }
+
+  let { activeNav = 'generator', onselectSection }: Props = $props();
 
   const previewPalettes: PreviewPalette[] = [
     {
@@ -52,6 +62,7 @@
 
   let selectedPaletteIndex = $state(0);
   let activeInspectHex = $state('4F46E5');
+  let activeSchemeHex = $state('4F46E5');
 
   const currentPalette = $derived(previewPalettes[selectedPaletteIndex] ?? previewPalettes[0]!);
 
@@ -61,10 +72,28 @@
 
   function handleSelectColorFromSwatch(hex: string) {
     activeInspectHex = hex;
-    // Smooth scroll to top inspector if needed on mobile
-    const inspectorElem = document.getElementById('color-inspector-section');
+    const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
     if (inspectorElem) {
       inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function handleInspectColorFromScheme(cleanHex: string) {
+    activeInspectHex = cleanHex;
+    const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
+    if (inspectorElem) {
+      inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function scrollToSection(id: string) {
+    if (onselectSection) {
+      onselectSection(id);
+    } else {
+      const target = document.getElementById(`${id}-section`) || document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 </script>
@@ -74,27 +103,91 @@
   <div class="text-center max-w-3xl mx-auto space-y-4">
     <div class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 shadow-sm">
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
-      <span class="text-xs font-mono text-muted-foreground">Modern Color Toolkit</span>
+      <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 2 Color Inspector</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Phase 3 Active</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
-      Inspect, explore & format colors.
+      Build harmony. Explore color schemes.
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      Analyze colors across HEX, RGB, HSL, HSV, CMYK, and XYZ formats in real time. Accurate naming and representations powered by The Color API.
+      Generate complementary, analogous, triadic, split-complementary, and monochromatic color schemes from any base hue. Powered by The Color API with zero-layout-shift and instant clipboard copy.
     </p>
+
+    <!-- Quick Tool Switcher Pills -->
+    <div class="pt-2 flex flex-wrap items-center justify-center gap-2">
+      <button
+        type="button"
+        onclick={() => scrollToSection('generator')}
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {activeNav === 'generator' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
+      >
+        <Palette class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+        <span>Scheme Generator</span>
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+          Phase 3
+        </span>
+      </button>
+
+      <button
+        type="button"
+        onclick={() => scrollToSection('inspector')}
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {activeNav === 'inspector' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
+      >
+        <Search class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+        <span>Color Inspector</span>
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
+          Phase 2
+        </span>
+      </button>
+    </div>
   </div>
 
-  <!-- Primary Feature: Color Picker & Inspector -->
-  <div id="color-inspector-section" class="scroll-mt-24">
+  <!-- Primary Feature: Color Scheme Generator (Phase 3) -->
+  <div id="generator-section" class="scroll-mt-24 space-y-3">
+    <div class="flex items-center justify-between border-b border-border pb-2">
+      <div>
+        <h2 class="text-lg font-bold text-foreground flex items-center gap-2">
+          <Palette class="w-5 h-5 text-accent" aria-hidden="true" />
+          <span>Color Scheme Generator</span>
+        </h2>
+        <p class="text-xs text-muted-foreground mt-0.5">
+          Select base color, harmony mode, and palette size to generate matching swatches.
+        </p>
+      </div>
+
+      <Badge variant="accent" size="sm">Phase 3</Badge>
+    </div>
+
+    <SchemeGenerator
+      initialHex={activeSchemeHex}
+      inspectorHex={activeInspectHex}
+      oninspectColor={handleInspectColorFromScheme}
+    />
+  </div>
+
+  <!-- Secondary Feature: Color Picker & Inspector (Phase 2) -->
+  <div id="inspector-section" class="scroll-mt-24 pt-8 border-t border-border space-y-4">
+    <div id="color-inspector-section" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-2">
+      <div>
+        <h2 class="text-lg font-bold text-foreground flex items-center gap-2">
+          <Search class="w-5 h-5 text-accent" aria-hidden="true" />
+          <span>Color Inspector & Formats</span>
+        </h2>
+        <p class="text-xs text-muted-foreground mt-0.5">
+          Inspect color representations across HEX, RGB, HSL, HSV, CMYK, and XYZ formats.
+        </p>
+      </div>
+
+      <Badge variant="neutral" size="sm">Phase 2</Badge>
+    </div>
+
     <ColorInspector initialHex={activeInspectHex} />
   </div>
 
   <!-- Curated Preset Palettes Section -->
-  <div class="space-y-4 pt-4 border-t border-border">
+  <div id="inspirations-section" class="space-y-4 pt-6 border-t border-border">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <div>
         <h2 class="text-base font-bold text-foreground flex items-center gap-2">
@@ -102,7 +195,7 @@
           <span>Curated Inspirations</span>
         </h2>
         <p class="text-xs text-muted-foreground mt-0.5">
-          Select any swatch to inspect its format breakdown in the inspector above.
+          Click any swatch to inspect its format breakdown in the Color Inspector above.
         </p>
       </div>
 
@@ -142,53 +235,71 @@
   </div>
 
   <!-- Roadmap Context Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 border-t border-border">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-6 border-t border-border">
     <!-- Card 1: Phase 1 Complete -->
-    <div class="rounded-xl border border-border bg-surface p-5 shadow-sm flex flex-col justify-between">
+    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
           <Badge variant="neutral">Completed</Badge>
           <span class="text-xs font-mono text-muted-foreground">Phase 1</span>
         </div>
-        <h3 class="text-base font-bold text-foreground mb-1">Design System & Shell</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Design System & Shell</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          Clean modern minimalist tokens, responsive layout, Svelte 5 runes, strict TypeScript, and light/dark theme persistence.
+          Modern minimalist tokens, responsive layout, Svelte 5 runes, strict TypeScript, light/dark theme.
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Foundation verified</span>
+        <span>Verified</span>
       </div>
     </div>
 
-    <!-- Card 2: Phase 2 Active -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-5 shadow-neo flex flex-col justify-between">
+    <!-- Card 2: Phase 2 Complete -->
+    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Phase 2 Active</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Inspector</span>
+          <Badge variant="neutral">Completed</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 2</span>
         </div>
-        <h3 class="text-base font-bold text-foreground mb-1">Color Picker & Inspector</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Color Picker & Inspector</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          The Color API integration (`/id` endpoint), interactive hex picker, format converters (HEX, RGB, HSL, HSV, CMYK, XYZ).
+          The Color API `/id` endpoint, interactive HEX picker, format converters (HEX, RGB, HSL, HSV, CMYK, XYZ).
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Live & verified with unit tests</span>
+        <span>Verified with tests</span>
       </div>
     </div>
 
-    <!-- Card 3: Upcoming Phase 3 -->
-    <div class="rounded-xl border border-border bg-surface p-5 flex flex-col justify-between hover:border-border-strong transition-colors">
+    <!-- Card 3: Phase 3 Active -->
+    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <Badge variant="accent">Phase 3 Active</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Generator</span>
+        </div>
+        <h3 class="text-sm font-bold text-foreground mb-1">Color Scheme Generator</h3>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          The Color API `/scheme` endpoint, harmony modes (Complementary, Analogous, Triadic, Split, Monochrome), Space shortcut.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+        <Check class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Live & verified with tests</span>
+      </div>
+    </div>
+
+    <!-- Card 4: Upcoming Phase 4 -->
+    <div class="rounded-xl border border-border bg-surface p-4 flex flex-col justify-between hover:border-border-strong transition-colors">
       <div>
         <div class="flex items-center justify-between mb-2">
           <Badge variant="neutral">Upcoming</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 3</span>
+          <span class="text-xs font-mono text-muted-foreground">Phase 4</span>
         </div>
-        <h3 class="text-base font-bold text-foreground/90 mb-1">Scheme Generator</h3>
+        <h3 class="text-sm font-bold text-foreground/90 mb-1">Color Converter</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          Monochromatic, analogous, complementary, and triadic schemes via The Color API `/scheme` endpoint with spacebar shortcut.
+          Interactive real-time conversion and input validation between HEX, RGB, HSL, HSV, CMYK.
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border text-[11px] font-mono text-muted-foreground">

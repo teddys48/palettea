@@ -4,11 +4,11 @@ Name: Palettea
 Tagline: Explore colors. Build harmony.
 Description: A web-based color toolkit for color exploration, palette generation, conversion, accessibility checks, and palette management.
 Current Status
-- Overall: Phase 2 complete; ready for review / Phase 3
-- Current phase: Phase 3 — Color Scheme Generator (ready to start upon authorization)
+- Overall: Phase 3 complete; ready for review / Phase 4
+- Current phase: Phase 4 — Color Converter (ready to start upon authorization)
 - Last updated: 2026-11-04
 - Repository initialized: Initialized with Git & Bun
-- Build status: Passing (Typecheck: 0 errors/0 warnings; Tests: 24 passed / 0 failed; Build: 0 errors)
+- Build status: Passing (Typecheck: 0 errors/0 warnings; Tests: 37 passed / 0 failed; Build: 0 errors)
 Update this file at the end of every development phase. Only mark items complete after verifying them.
 
 Product & Design Decisions
@@ -68,21 +68,23 @@ Acceptance criteria:
 - [x] API logic is isolated in a service module
 - [x] Copying color values works with clear feedback
 Phase 3 — Color Scheme Generator
-Status: ⬜ Not started
+Status: ✅ Complete
 
 Scope:
-- [ ] Integrate The Color API /scheme endpoint
-- [ ] Support monochromatic, analogous, complementary, triadic, and tetradic/quad schemes as supported by API
-- [ ] Allow palette size configuration
-- [ ] Display generated color cards
-- [ ] Copy individual colors and entire palette
-- [ ] Regenerate palette
-- [ ] Space keyboard shortcut with focus guards
-- [ ] Optional color-lock interaction if in scope
+- [x] Integrate The Color API /scheme endpoint
+- [x] Support monochromatic, analogous, complementary, triadic, split complementary, and tetradic/quad schemes as supported by API
+- [x] Allow palette size configuration (min: 2, max: 10, default: 5)
+- [x] Display generated color swatches with contrast-aware text overlays
+- [x] Copy individual colors and entire palette as HEX list
+- [x] Regenerate palette with loading state and AbortController race condition handling
+- [x] Space keyboard shortcut with strict focus guards (input, textarea, select, button, contenteditable)
+- [x] Random base color generator with valid 6-digit hex
+- [x] Bi-directional integration with Color Inspector (use inspector color / send swatch to inspector) without state interference
 Acceptance criteria:
-- [ ] Generated palette reflects selected base color and scheme
-- [ ] Controls and labels are understandable
-- [ ] Keyboard shortcut does not interfere with text entry
+- [x] Generated palette reflects selected base color and scheme
+- [x] Controls and labels are understandable with wheel angle descriptions
+- [x] Keyboard shortcut does not interfere with text entry
+- [x] Full test coverage with mocks (37 passed) and production build verified
 Phase 4 — Color Converter
 Status: ⬜ Not started
 
@@ -168,9 +170,9 @@ Endpoint	Purpose	Planned phase
 
 Official documentation: https://www.thecolorapi.com/
 Current / Next Actions
-1. Phase 2 Color Picker & Inspector completed, tested (24 unit tests), and verified.
-2. Review Phase 2 results.
-3. Proceed to Phase 3 (Color Scheme Generator) upon authorization.
+1. Phase 3 Color Scheme Generator completed, tested (37 unit tests), and verified.
+2. Review Phase 3 results.
+3. Proceed to Phase 4 (Color Converter) upon authorization.
 Development Log
 2026-11-03 — Project planning
 - Selected product name Palettea.
@@ -199,3 +201,15 @@ Development Log
 - Connected curated inspiration swatches in `ColorSwatchPreview.svelte` to allow one-click inspection in `ColorInspector`.
 - Added 24 unit tests across 3 test files: `color-utils.test.ts` (14 tests), `color-api.test.ts` (7 mock tests), and `clipboard.test.ts` (3 tests).
 - Verified validation suite: `bun run check` (0 errors, 0 warnings), `bun run test` (24 passed, 0 failed), `bun run build` (production build completed in 234ms).
+2026-11-04 — Phase 3 completed: Color Scheme Generator
+- Implemented `src/lib/types/scheme.ts`: typed models for The Color API `/scheme` endpoint, harmony options (`complement`, `analogic`, `triad`, `analogic-complement`, `monochrome`, `quad`), and response interfaces with wheel angles and descriptions.
+- Added `fetchColorScheme` to `src/lib/services/color-api.ts`: client-side validation, in-memory caching by `${hex}_${mode}_${count}`, `AbortController` cancellation for rapid user inputs, and strict non-2xx/empty-payload error handling.
+- Added `getRandomHex` to `src/lib/utils/color-utils.ts`: valid 6-digit hex generation.
+- Implemented `src/lib/components/scheme/SchemeSwatch.svelte`: tactile card with high-contrast text overlay (WCAG relative luminance), color name, RGB representation, seed indicator, hover actions, and one-click copy with animated "Copied!" feedback.
+- Implemented `src/lib/components/scheme/SchemePalette.svelte`: responsive auto-fitting grid, zero-layout-shift skeleton loaders matching palette count, and batch "Copy Palette (HEX)" action.
+- Implemented `src/lib/components/scheme/SchemeControls.svelte`: dual base-color input (native color picker + validated text field), Random Base Color generator, "Use Inspector Color" integration button, harmony mode selector buttons with angle badges and descriptions, color count presets (3, 4, 5, 6, 8) and stepper (- / +), and Regenerate button.
+- Implemented `src/lib/components/scheme/SchemeGenerator.svelte`: state coordinator with `AbortController` cancellation, accessible error state with retry, and global Space key listener with strict focus guards (ignores input, textarea, select, button, contenteditable).
+- Updated `src/lib/components/workspace/WorkspaceHero.svelte`: integrated Scheme Generator as top primary tool alongside Color Inspector with bidirectional color handoff, smooth section switching, and updated roadmap status cards.
+- Updated `src/lib/components/layout/Navbar.svelte`: activated Scheme Generator navigation item and updated badge to Phase 3.
+- Expanded test suite to 37 tests across 4 test files (`color-api.test.ts`, `color-utils.test.ts`, `clipboard.test.ts`, `scheme.test.ts`) covering all harmony modes, count limits, caching, network failures, abort signals, and clipboard interactions.
+- Verified validation suite: `bun run check` (0 errors, 0 warnings), `bun run test` (37 passed, 0 failed), `bun run build` (production build completed in 305ms).
