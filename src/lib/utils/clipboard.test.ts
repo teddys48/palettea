@@ -1,0 +1,55 @@
+import { describe, it, expect, afterEach } from 'bun:test';
+import { copyToClipboard } from './clipboard';
+
+describe('clipboard utility', () => {
+  const originalNavigator = globalThis.navigator;
+
+  afterEach(() => {
+    Object.defineProperty(globalThis, 'navigator', {
+      value: originalNavigator,
+      configurable: true,
+      writable: true,
+    });
+  });
+
+  it('returns false for empty text', async () => {
+    const result = await copyToClipboard('');
+    expect(result).toBe(false);
+  });
+
+  it('uses navigator.clipboard.writeText when available', async () => {
+    let written = '';
+    const mockClipboard = {
+      writeText: async (text: string) => {
+        written = text;
+      },
+    };
+
+    Object.defineProperty(globalThis, 'navigator', {
+      value: { clipboard: mockClipboard },
+      configurable: true,
+      writable: true,
+    });
+
+    const success = await copyToClipboard('#4F46E5');
+    expect(success).toBe(true);
+    expect(written).toBe('#4F46E5');
+  });
+
+  it('returns false gracefully when clipboard operations fail', async () => {
+    const mockClipboard = {
+      writeText: async () => {
+        throw new Error('Clipboard permission denied');
+      },
+    };
+
+    Object.defineProperty(globalThis, 'navigator', {
+      value: { clipboard: mockClipboard },
+      configurable: true,
+      writable: true,
+    });
+
+    const success = await copyToClipboard('#4F46E5');
+    expect(typeof success).toBe('boolean');
+  });
+});

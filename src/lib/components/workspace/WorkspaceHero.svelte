@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Bookmark from 'lucide-svelte/icons/bookmark';
-  import Info from 'lucide-svelte/icons/info';
   import Check from 'lucide-svelte/icons/check';
+  import Sparkles from 'lucide-svelte/icons/sparkles';
   import RefreshCw from 'lucide-svelte/icons/refresh-cw';
   import Button from '../ui/Button.svelte';
   import Badge from '../ui/Badge.svelte';
+  import ColorInspector from '../color/ColorInspector.svelte';
   import ColorSwatchPreview from './ColorSwatchPreview.svelte';
   import type { PreviewPalette } from '../../types';
 
@@ -51,190 +51,131 @@
   ];
 
   let selectedPaletteIndex = $state(0);
-  let colorInputHex = $state('#4F46E5');
-  let noticeMessage = $state<string | null>(null);
-  let noticeTimeout: ReturnType<typeof setTimeout> | null = null;
+  let activeInspectHex = $state('4F46E5');
 
   const currentPalette = $derived(previewPalettes[selectedPaletteIndex] ?? previewPalettes[0]!);
-
-  function showPrototypeNotice(feature: string, phase: string) {
-    noticeMessage = `${feature} is scheduled for ${phase}. Palettea is currently in Phase 1 (Foundation & UI Setup).`;
-    if (noticeTimeout) clearTimeout(noticeTimeout);
-    noticeTimeout = setTimeout(() => {
-      noticeMessage = null;
-    }, 4000);
-  }
 
   function cyclePresetPalette() {
     selectedPaletteIndex = (selectedPaletteIndex + 1) % previewPalettes.length;
   }
+
+  function handleSelectColorFromSwatch(hex: string) {
+    activeInspectHex = hex;
+    // Smooth scroll to top inspector if needed on mobile
+    const inspectorElem = document.getElementById('color-inspector-section');
+    if (inspectorElem) {
+      inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 </script>
 
-<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 space-y-12">
   <!-- Top Hero Header -->
-  <div class="mb-8 sm:mb-12 text-center max-w-3xl mx-auto space-y-4">
+  <div class="text-center max-w-3xl mx-auto space-y-4">
     <div class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 shadow-sm">
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Modern Color Toolkit</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 1 Foundation</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Phase 2 Color Inspector</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
-      Find your perfect colors.
+      Inspect, explore & format colors.
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      Explore harmonized color schemes, inspect formats across HEX, RGB & HSL, and ensure WCAG accessibility. Designed with clarity and precision.
+      Analyze colors across HEX, RGB, HSL, HSV, CMYK, and XYZ formats in real time. Accurate naming and representations powered by The Color API.
     </p>
   </div>
 
-  <!-- Interactive Visual Prototype Controls Bar -->
-  <div class="mb-8 rounded-2xl border border-border bg-surface p-4 sm:p-5 shadow-neo">
-    <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-      <!-- Color Input Visual Prototype -->
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-        <label for="color-picker-prototype" class="text-xs font-mono font-semibold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
-          Base Color
-        </label>
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <!-- Color Swatch Circle / Indicator -->
-          <div class="relative flex items-center">
-            <span
-              class="h-9 w-9 rounded-lg border border-border-strong/30 dark:border-zinc-700 shadow-inner flex items-center justify-center transition-transform hover:scale-105"
-              style="background-color: {colorInputHex};"
-              aria-hidden="true"
-            ></span>
-          </div>
+  <!-- Primary Feature: Color Picker & Inspector -->
+  <div id="color-inspector-section" class="scroll-mt-24">
+    <ColorInspector initialHex={activeInspectHex} />
+  </div>
 
-          <!-- HEX Input Box (Visual Prototype) -->
-          <div class="relative flex items-center">
-            <span class="absolute left-3 text-xs font-mono text-muted-foreground pointer-events-none">#</span>
-            <input
-              id="color-picker-prototype"
-              type="text"
-              value={colorInputHex.replace('#', '')}
-              readonly
-              onclick={() => showPrototypeNotice('Live HEX Color Input & Inspector', 'Phase 2')}
-              title="HEX input prototype (Editable in Phase 2)"
-              class="h-9 w-28 rounded-lg border border-border bg-background pl-6 pr-2 text-xs font-mono font-bold text-foreground cursor-pointer hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-            />
-          </div>
+  <!-- Curated Preset Palettes Section -->
+  <div class="space-y-4 pt-4 border-t border-border">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h2 class="text-base font-bold text-foreground flex items-center gap-2">
+          <Sparkles class="w-4 h-4 text-accent" aria-hidden="true" />
+          <span>Curated Inspirations</span>
+        </h2>
+        <p class="text-xs text-muted-foreground mt-0.5">
+          Select any swatch to inspect its format breakdown in the inspector above.
+        </p>
+      </div>
 
-          <Badge variant="neutral" size="sm" class="hidden sm:inline-flex">
-            Interactive in Phase 2
-          </Badge>
+      <div class="flex items-center gap-2">
+        <!-- Preset Selector Pills -->
+        <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-background border border-border">
+          {#each previewPalettes as palette, i (palette.id)}
+            <button
+              type="button"
+              onclick={() => (selectedPaletteIndex = i)}
+              class="px-3 py-1 text-xs font-mono rounded-lg border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {selectedPaletteIndex === i ? 'bg-surface border-border-strong dark:border-zinc-600 text-foreground font-bold shadow-neo' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-surface/50'}"
+            >
+              {palette.title}
+            </button>
+          {/each}
         </div>
-      </div>
 
-      <!-- Preset Switcher (Pill control with high-contrast active state in light and dark) -->
-      <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-background border border-border">
-        <span class="text-xs font-mono text-muted-foreground px-2 hidden sm:inline-block">Presets:</span>
-        {#each previewPalettes as palette, i (palette.id)}
-          <button
-            type="button"
-            onclick={() => (selectedPaletteIndex = i)}
-            class="px-3 py-1 text-xs font-mono rounded-lg border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {selectedPaletteIndex === i ? 'bg-surface border-border-strong dark:border-zinc-600 text-foreground font-bold shadow-neo' : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-surface/50'}"
-          >
-            {palette.title}
-          </button>
-        {/each}
-      </div>
-
-      <!-- Action Buttons (Generate & Save) -->
-      <div class="flex items-center gap-2 pt-2 lg:pt-0 border-t lg:border-t-0 border-border">
-        <!-- Generate Button -->
-        <Button
-          variant="primary"
-          size="md"
-          onclick={cyclePresetPalette}
-          title="Cycle through Phase 1 curated preview palettes"
-          aria-label="Cycle preview palette"
-        >
-          <RefreshCw class="w-4 h-4" aria-hidden="true" />
-          <span>Switch Preset</span>
-          <span class="hidden sm:inline-flex text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded font-mono">Click</span>
-        </Button>
-
-        <!-- Save Button (Disabled in Phase 1) -->
         <Button
           variant="secondary"
-          size="md"
-          disabled={true}
-          title="Save palette is planned for Phase 6"
-          aria-label="Save palette (disabled until Phase 6)"
+          size="sm"
+          onclick={cyclePresetPalette}
+          title="Switch to next curated palette"
+          aria-label="Switch curated palette preset"
         >
-          <Bookmark class="w-4 h-4 text-muted-foreground" aria-hidden="true" />
-          <span>Save</span>
-          <span class="text-[10px] font-mono text-muted-foreground">Phase 6</span>
+          <RefreshCw class="w-3.5 h-3.5" aria-hidden="true" />
+          <span class="hidden sm:inline">Next Preset</span>
         </Button>
       </div>
     </div>
 
-    <!-- Notice Banner for Prototype Interactions -->
-    {#if noticeMessage}
-      <div
-        role="alert"
-        class="mt-3 flex items-center justify-between rounded-xl border border-indigo-200 bg-indigo-50/90 dark:border-indigo-800/80 dark:bg-indigo-950/40 px-3.5 py-2.5 text-xs font-mono text-indigo-950 dark:text-indigo-200 animate-in fade-in duration-200"
-      >
-        <div class="flex items-center gap-2">
-          <Info class="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" aria-hidden="true" />
-          <span>{noticeMessage}</span>
-        </div>
-        <button
-          type="button"
-          onclick={() => (noticeMessage = null)}
-          class="text-xs text-indigo-700 dark:text-indigo-300 hover:text-indigo-950 dark:hover:text-white underline cursor-pointer ml-2"
-        >
-          Dismiss
-        </button>
-      </div>
-    {/if}
-  </div>
-
-  <!-- Color Swatch Preview Area -->
-  <div class="mb-10">
     <ColorSwatchPreview
       colors={currentPalette.colors}
       paletteName={currentPalette.title}
       paletteTag={currentPalette.tag}
+      onselectColor={handleSelectColorFromSwatch}
     />
   </div>
 
-  <!-- Roadmap Context Cards (Transparent status about Phase 1 foundation and future phases) -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <!-- Card 1: Phase 1 Active -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-5 shadow-neo flex flex-col justify-between">
+  <!-- Roadmap Context Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 border-t border-border">
+    <!-- Card 1: Phase 1 Complete -->
+    <div class="rounded-xl border border-border bg-surface p-5 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Phase 1 Active</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Foundation</span>
+          <Badge variant="neutral">Completed</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 1</span>
         </div>
         <h3 class="text-base font-bold text-foreground mb-1">Design System & Shell</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          Clean modern minimalist design tokens, responsive layout, Svelte 5 runes, strict TypeScript, and light/dark theme switching.
+          Clean modern minimalist tokens, responsive layout, Svelte 5 runes, strict TypeScript, and light/dark theme persistence.
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Setup verified & active</span>
+        <span>Foundation verified</span>
       </div>
     </div>
 
-    <!-- Card 2: Upcoming Phase 2 -->
-    <div class="rounded-xl border border-border bg-surface p-5 flex flex-col justify-between hover:border-border-strong transition-colors">
+    <!-- Card 2: Phase 2 Active -->
+    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-5 shadow-neo flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Upcoming</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 2</span>
+          <Badge variant="accent">Phase 2 Active</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Inspector</span>
         </div>
-        <h3 class="text-base font-bold text-foreground/90 mb-1">Color Picker & Inspector</h3>
+        <h3 class="text-base font-bold text-foreground mb-1">Color Picker & Inspector</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          The Color API integration (`/id` endpoint), interactive hex picker, format converters (HEX, RGB, HSL, HSV, CMYK).
+          The Color API integration (`/id` endpoint), interactive hex picker, format converters (HEX, RGB, HSL, HSV, CMYK, XYZ).
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border text-[11px] font-mono text-muted-foreground">
-        Planned next in roadmap
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+        <Check class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Live & verified with unit tests</span>
       </div>
     </div>
 
@@ -251,7 +192,7 @@
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border text-[11px] font-mono text-muted-foreground">
-        Planned in roadmap
+        Planned in next roadmap phase
       </div>
     </div>
   </div>

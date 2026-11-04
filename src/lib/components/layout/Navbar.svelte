@@ -18,8 +18,8 @@
   let isMobileMenuOpen = $state(false);
 
   const navItems: NavItem[] = [
-    { id: 'generator', label: 'Generator', href: '#generator', active: true },
-    { id: 'explore', label: 'Explore', href: '#explore', badge: 'Soon' },
+    { id: 'inspector', label: 'Color Inspector', href: '#inspector', active: true },
+    { id: 'generator', label: 'Generator', href: '#generator', badge: 'Phase 3', disabled: true },
     { id: 'collections', label: 'Collections', href: '#collections', badge: 'Phase 6', disabled: true },
   ];
 
@@ -51,7 +51,7 @@
           <span class="text-[10px] uppercase font-mono tracking-wider text-muted-foreground -mt-1">Color Toolkit</span>
         </div>
       </a>
-      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 1</Badge>
+      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 2</Badge>
     </div>
 
     <!-- Desktop Navigation -->

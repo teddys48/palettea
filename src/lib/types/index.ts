@@ -24,3 +24,5 @@ export interface PreviewPalette {
   tag: string;
   colors: ColorSwatch[];
 }
+
+export * from './color';
