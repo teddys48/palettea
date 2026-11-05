@@ -56,6 +56,35 @@ describe('clipboard utility', () => {
     expect(written).toBe(paletteList);
   });
 
+  it('successfully copies converted color formats (RGB, HSL, HSV, CMYK)', async () => {
+    let written = '';
+    const mockClipboard = {
+      writeText: async (text: string) => {
+        written = text;
+      },
+    };
+
+    Object.defineProperty(globalThis, 'navigator', {
+      value: { clipboard: mockClipboard },
+      configurable: true,
+      writable: true,
+    });
+
+    const formatsToTest = [
+      '#7C83FD',
+      'rgb(124, 131, 253)',
+      'hsl(237, 98%, 74%)',
+      'hsv(237, 51%, 99%)',
+      'cmyk(51%, 48%, 0%, 1%)',
+    ];
+
+    for (const fmt of formatsToTest) {
+      const ok = await copyToClipboard(fmt);
+      expect(ok).toBe(true);
+      expect(written).toBe(fmt);
+    }
+  });
+
   it('returns false gracefully when clipboard operations fail', async () => {
     const mockClipboard = {
       writeText: async () => {

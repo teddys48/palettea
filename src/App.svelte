@@ -7,7 +7,7 @@
   import type { Theme } from './lib/types';
 
   let currentTheme = $state<Theme>('light');
-  let activeNav = $state<string>('generator');
+  let activeNav = $state<string>('converter');
 
   onMount(() => {
     currentTheme = getInitialTheme();

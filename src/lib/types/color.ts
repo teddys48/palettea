@@ -103,3 +103,69 @@ export interface ColorFormatItem {
   value: string;
   description: string;
 }
+
+/* =========================================================================
+   Phase 4: Color Converter Types
+   ========================================================================= */
+
+export type SupportedColorFormat = 'hex' | 'rgb' | 'hsl' | 'hsv' | 'cmyk';
+
+export interface RgbColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
+export interface HslColor {
+  h: number;
+  s: number;
+  l: number;
+}
+
+export interface HsvColor {
+  h: number;
+  s: number;
+  v: number;
+}
+
+export interface CmykColor {
+  c: number;
+  m: number;
+  y: number;
+  k: number;
+}
+
+export interface ConvertedColorResult {
+  hex: {
+    value: string; // e.g. '#7C83FD'
+    raw: string; // e.g. '7C83FD'
+  };
+  rgb: {
+    value: string; // e.g. '124, 131, 253'
+    css: string; // e.g. 'rgb(124, 131, 253)'
+    channels: RgbColor;
+  };
+  hsl: {
+    value: string; // e.g. '237, 98%, 74%'
+    css: string; // e.g. 'hsl(237, 98%, 74%)'
+    channels: HslColor;
+  };
+  hsv: {
+    value: string; // e.g. '237, 51%, 99%'
+    css: string; // e.g. 'hsv(237, 51%, 99%)'
+    channels: HsvColor;
+  };
+  cmyk: {
+    value: string; // e.g. '51%, 48%, 0%, 1%'
+    css: string; // e.g. 'cmyk(51%, 48%, 0%, 1%)'
+    channels: CmykColor;
+  };
+}
+
+export type ParseColorResult =
+  | { success: true; rgb: RgbColor }
+  | { success: false; error: string };
+
+export type ConvertColorResult =
+  | { success: true; data: ConvertedColorResult }
+  | { success: false; error: string };
