@@ -5,11 +5,13 @@
   import Palette from 'lucide-svelte/icons/palette';
   import Search from 'lucide-svelte/icons/search';
   import ArrowRightLeft from 'lucide-svelte/icons/arrow-right-left';
+  import Eye from 'lucide-svelte/icons/eye';
   import Button from '../ui/Button.svelte';
   import Badge from '../ui/Badge.svelte';
   import ColorInspector from '../color/ColorInspector.svelte';
   import SchemeGenerator from '../scheme/SchemeGenerator.svelte';
   import ColorConverter from '../converter/ColorConverter.svelte';
+  import ContrastChecker from '../contrast/ContrastChecker.svelte';
   import ColorSwatchPreview from './ColorSwatchPreview.svelte';
   import type { PreviewPalette } from '../../types';
 
@@ -18,7 +20,7 @@
     onselectSection?: (id: string) => void;
   }
 
-  let { activeNav = 'generator', onselectSection }: Props = $props();
+  let { activeNav = 'contrast', onselectSection }: Props = $props();
 
   const previewPalettes: PreviewPalette[] = [
     {
@@ -66,6 +68,8 @@
   let activeInspectHex = $state('4F46E5');
   let activeSchemeHex = $state('4F46E5');
   let activeConverterHex = $state('7C83FD');
+  let activeContrastFg = $state('#191919');
+  let activeContrastBg = $state('#FFFFFF');
 
   const currentPalette = $derived(previewPalettes[selectedPaletteIndex] ?? previewPalettes[0]!);
 
@@ -77,6 +81,7 @@
     const clean = hex.replace(/^#/, '');
     activeInspectHex = clean;
     activeConverterHex = clean;
+    activeContrastFg = hex;
     const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
     if (inspectorElem) {
       inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -86,6 +91,7 @@
   function handleInspectColorFromScheme(cleanHex: string) {
     activeInspectHex = cleanHex;
     activeConverterHex = cleanHex;
+    activeContrastFg = '#' + cleanHex;
     const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
     if (inspectorElem) {
       inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -94,6 +100,16 @@
 
   function handleInspectColorFromConverter(cleanHex: string) {
     activeInspectHex = cleanHex;
+    activeContrastFg = '#' + cleanHex;
+    const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
+    if (inspectorElem) {
+      inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function handleInspectColorFromContrast(cleanHex: string) {
+    activeInspectHex = cleanHex;
+    activeConverterHex = cleanHex;
     const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
     if (inspectorElem) {
       inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -119,7 +135,7 @@
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 4 Active</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Phase 5 Active</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
@@ -127,11 +143,23 @@
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      A modern color toolkit to convert formats in real-time, generate harmonic schemes, and inspect color properties with mathematical precision.
+      A modern color toolkit to evaluate WCAG 2.2 contrast ratios, convert formats in real-time, generate harmonic schemes, and inspect color properties with mathematical precision.
     </p>
 
     <!-- Quick Tool Switcher Pills -->
     <div class="pt-2 flex flex-wrap items-center justify-center gap-2">
+      <button
+        type="button"
+        onclick={() => scrollToSection('contrast')}
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {activeNav === 'contrast' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
+      >
+        <Eye class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+        <span>Contrast Checker</span>
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+          Phase 5
+        </span>
+      </button>
+
       <button
         type="button"
         onclick={() => scrollToSection('converter')}
@@ -139,7 +167,7 @@
       >
         <ArrowRightLeft class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Color Converter</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
           Phase 4
         </span>
       </button>
@@ -170,8 +198,31 @@
     </div>
   </div>
 
-  <!-- Primary Feature: Color Converter (Phase 4) -->
-  <div id="converter-section" class="scroll-mt-24 space-y-3">
+  <!-- Primary Feature: Contrast & Accessibility Checker (Phase 5) -->
+  <div id="contrast-section" class="scroll-mt-24 space-y-3">
+    <div class="flex items-center justify-between border-b border-border pb-2">
+      <div>
+        <h2 class="text-lg font-bold text-foreground flex items-center gap-2">
+          <Eye class="w-5 h-5 text-accent" aria-hidden="true" />
+          <span>Contrast & Accessibility Checker</span>
+        </h2>
+        <p class="text-xs text-muted-foreground mt-0.5">
+          Evaluate foreground and background readability against WCAG 2.2 standards with live preview and smart recommendations.
+        </p>
+      </div>
+
+      <Badge variant="accent" size="sm">Phase 5</Badge>
+    </div>
+
+    <ContrastChecker
+      initialForegroundHex={activeContrastFg}
+      initialBackgroundHex={activeContrastBg}
+      oninspectColor={handleInspectColorFromContrast}
+    />
+  </div>
+
+  <!-- Secondary Feature: Color Converter (Phase 4) -->
+  <div id="converter-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
         <h2 class="text-lg font-bold text-foreground flex items-center gap-2">
@@ -183,7 +234,7 @@
         </p>
       </div>
 
-      <Badge variant="accent" size="sm">Phase 4</Badge>
+      <Badge variant="neutral" size="sm">Phase 4</Badge>
     </div>
 
     <ColorConverter
@@ -192,7 +243,7 @@
     />
   </div>
 
-  <!-- Secondary Feature: Color Scheme Generator (Phase 3) -->
+  <!-- Tertiary Feature: Color Scheme Generator (Phase 3) -->
   <div id="generator-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -215,7 +266,7 @@
     />
   </div>
 
-  <!-- Tertiary Feature: Color Picker & Inspector (Phase 2) -->
+  <!-- Quaternary Feature: Color Picker & Inspector (Phase 2) -->
   <div id="inspector-section" class="scroll-mt-24 pt-8 border-t border-border space-y-4">
     <div id="color-inspector-section" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-2">
       <div>
@@ -243,7 +294,7 @@
           <span>Curated Inspirations</span>
         </h2>
         <p class="text-xs text-muted-foreground mt-0.5">
-          Click any swatch to load into Color Inspector and Color Converter above.
+          Click any swatch to load into Color Inspector, Color Converter, and Contrast Checker.
         </p>
       </div>
 
@@ -338,12 +389,12 @@
       </div>
     </div>
 
-    <!-- Card 4: Phase 4 Active -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+    <!-- Card 4: Phase 4 Complete -->
+    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Phase 4 Active</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Converter</span>
+          <Badge variant="neutral">Completed</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 4</span>
         </div>
         <h3 class="text-sm font-bold text-foreground mb-1">Color Converter</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
@@ -352,24 +403,25 @@
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Live & verified with tests</span>
+        <span>Verified with tests</span>
       </div>
     </div>
 
-    <!-- Card 5: Upcoming Phase 5 -->
-    <div class="rounded-xl border border-border bg-surface p-4 flex flex-col justify-between hover:border-border-strong transition-colors">
+    <!-- Card 5: Phase 5 Active -->
+    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Upcoming</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 5</span>
+          <Badge variant="accent">Phase 5 Active</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Contrast</span>
         </div>
-        <h3 class="text-sm font-bold text-foreground/90 mb-1">Contrast & Accessibility</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Contrast & Accessibility</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          WCAG 2.1 contrast calculations (AA/AAA checks), relative luminance analysis, and text legibility preview.
+          WCAG 2.2 contrast calculations (AA/AAA checks), live context preview, and smart color improvement suggestions.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border text-[11px] font-mono text-muted-foreground">
-        Planned in next roadmap phase
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+        <Check class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Live & verified with tests</span>
       </div>
     </div>
   </div>

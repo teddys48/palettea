@@ -8,6 +8,9 @@ import {
   getRelativeLuminance,
   getContrastColor,
   isLightColor,
+  calculateContrastRatio,
+  getContrastRatio,
+  formatContrastRatio,
 } from './color-utils';
 
 describe('color-utils', () => {
@@ -113,6 +116,23 @@ describe('color-utils', () => {
     it('calculates expected luminance values', () => {
       expect(getRelativeLuminance(0, 0, 0)).toBe(0);
       expect(getRelativeLuminance(255, 255, 255)).toBeCloseTo(1, 4);
+    });
+
+    it('calculates and formats WCAG contrast ratios', () => {
+      // (1.0 + 0.05) / (0.0 + 0.05) = 21.0
+      expect(calculateContrastRatio(1.0, 0.0)).toBe(21.0);
+      expect(calculateContrastRatio(0.0, 1.0)).toBe(21.0);
+      expect(calculateContrastRatio(0.5, 0.5)).toBe(1.0);
+
+      const bwRatio = getContrastRatio('#000000', '#FFFFFF');
+      expect(bwRatio).toBe(21.0);
+      expect(formatContrastRatio(bwRatio!)).toBe('21.00:1');
+
+      const sameRatio = getContrastRatio('#4F46E5', '#4F46E5');
+      expect(sameRatio).toBe(1.0);
+      expect(formatContrastRatio(sameRatio!)).toBe('1.00:1');
+
+      expect(getContrastRatio('invalid', '#FFFFFF')).toBeNull();
     });
 
     it('returns high contrast color (#FFFFFF or #000000)', () => {

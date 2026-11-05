@@ -116,6 +116,43 @@ export function isLightColor(hexInput: string): boolean {
 }
 
 /* =========================================================================
+   Phase 5: WCAG Contrast Ratio Mathematical Utilities
+   ========================================================================= */
+
+/**
+ * Calculates WCAG contrast ratio between two relative luminance values L1 and L2.
+ * Contrast ratio formula: (L1 + 0.05) / (L2 + 0.05)
+ * where L1 is the lighter luminance and L2 is the darker luminance.
+ * Output is unrounded floating point in the range [1, 21].
+ */
+export function calculateContrastRatio(lum1: number, lum2: number): number {
+  const lighter = Math.max(lum1, lum2);
+  const darker = Math.min(lum1, lum2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * Calculates WCAG contrast ratio directly between two hex color codes.
+ * Returns null if either hex code is invalid.
+ */
+export function getContrastRatio(hex1: string, hex2: string): number | null {
+  const rgb1 = hexToRgb(hex1);
+  const rgb2 = hexToRgb(hex2);
+  if (!rgb1 || !rgb2) return null;
+
+  const lum1 = getRelativeLuminance(rgb1.r, rgb1.g, rgb1.b);
+  const lum2 = getRelativeLuminance(rgb2.r, rgb2.g, rgb2.b);
+  return calculateContrastRatio(lum1, lum2);
+}
+
+/**
+ * Formats a raw numeric contrast ratio into standard WCAG display string (e.g. '4.56:1', '21.00:1').
+ */
+export function formatContrastRatio(ratio: number): string {
+  return `${ratio.toFixed(2)}:1`;
+}
+
+/* =========================================================================
    Phase 4: Color Conversion Mathematical Engine
    ========================================================================= */
 
