@@ -2,6 +2,7 @@
   import Copy from 'lucide-svelte/icons/copy';
   import Check from 'lucide-svelte/icons/check';
   import Layers from 'lucide-svelte/icons/layers';
+  import FolderPlus from 'lucide-svelte/icons/folder-plus';
   import SchemeSwatch from './SchemeSwatch.svelte';
   import { copyToClipboard } from '../../utils/clipboard';
   import { normalizeHex } from '../../utils/color-utils';
@@ -13,6 +14,7 @@
     isLoading?: boolean;
     skeletonCount?: number;
     oninspect?: (cleanHex: string) => void;
+    onsave?: (colors: Array<{ hex: string; name?: string }>) => void;
   }
 
   let {
@@ -21,6 +23,7 @@
     isLoading = false,
     skeletonCount = 5,
     oninspect,
+    onsave,
   }: Props = $props();
 
   let isPaletteCopied = $state(false);
@@ -40,6 +43,15 @@
       }, 2000);
     }
   }
+
+  function handleSaveClick() {
+    if (colors.length === 0 || !onsave) return;
+    const formatted = colors.map((c) => ({
+      hex: c.hex.value,
+      name: c.name?.value,
+    }));
+    onsave(formatted);
+  }
 </script>
 
 <div class="space-y-4">
@@ -55,22 +67,38 @@
       </span>
     </div>
 
-    <!-- Copy Palette Button -->
-    <button
-      type="button"
-      disabled={isLoading || colors.length === 0}
-      onclick={handleCopyEntirePalette}
-      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-border bg-surface text-foreground text-xs font-mono font-semibold shadow-sm hover:border-border-strong hover:bg-surface-hover active:translate-y-[1px] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-      title="Copy all HEX codes as a comma-separated list"
-    >
-      {#if isPaletteCopied}
-        <Check class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
-        <span class="text-emerald-600 dark:text-emerald-400">All Copied!</span>
-      {:else}
-        <Copy class="w-3.5 h-3.5 text-muted-foreground" aria-hidden="true" />
-        <span>Copy Palette (HEX)</span>
+    <!-- Actions: Save & Copy -->
+    <div class="flex items-center gap-2">
+      {#if onsave}
+        <button
+          type="button"
+          disabled={isLoading || colors.length === 0}
+          onclick={handleSaveClick}
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-border bg-surface text-foreground text-xs font-mono font-semibold shadow-sm hover:border-border-strong hover:bg-surface-hover active:translate-y-[1px] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          title="Save this scheme to your palette collections"
+        >
+          <FolderPlus class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+          <span>Save Palette</span>
+        </button>
       {/if}
-    </button>
+
+      <!-- Copy Palette Button -->
+      <button
+        type="button"
+        disabled={isLoading || colors.length === 0}
+        onclick={handleCopyEntirePalette}
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-border bg-surface text-foreground text-xs font-mono font-semibold shadow-sm hover:border-border-strong hover:bg-surface-hover active:translate-y-[1px] transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        title="Copy all HEX codes as a comma-separated list"
+      >
+        {#if isPaletteCopied}
+          <Check class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+          <span class="text-emerald-600 dark:text-emerald-400">All Copied!</span>
+        {:else}
+          <Copy class="w-3.5 h-3.5 text-muted-foreground" aria-hidden="true" />
+          <span>Copy Palette (HEX)</span>
+        {/if}
+      </button>
+    </div>
   </div>
 
   <!-- Swatches Container -->

@@ -28,3 +28,5 @@ export interface PreviewPalette {
 export * from './color';
 export * from './scheme';
 export * from './contrast';
+export * from './palette';
+export * from './collection';

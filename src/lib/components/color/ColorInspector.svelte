@@ -11,9 +11,10 @@
 
   interface Props {
     initialHex?: string;
+    onsavePalette?: (color: { hex: string; name?: string }) => void;
   }
 
-  let { initialHex = '4F46E5' }: Props = $props();
+  let { initialHex = '4F46E5', onsavePalette }: Props = $props();
 
   let activeCleanHex = $state('4F46E5');
   let status = $state<ColorRequestStatus>('idle');
@@ -153,7 +154,11 @@
   {:else}
     <!-- Color Preview & Format Breakdown -->
     <div class="space-y-6 animate-in fade-in duration-200">
-      <ColorPreview hex={activeCleanHex} {colorData} />
+      <ColorPreview
+        hex={activeCleanHex}
+        {colorData}
+        onsave={onsavePalette}
+      />
 
       {#if colorData}
         <ColorFormats {colorData} />

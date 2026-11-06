@@ -18,11 +18,11 @@
   let isMobileMenuOpen = $state(false);
 
   const navItems: NavItem[] = [
+    { id: 'collections', label: 'Palettes & Collections', href: '#collections' },
     { id: 'contrast', label: 'Contrast Checker', href: '#contrast' },
     { id: 'converter', label: 'Color Converter', href: '#converter' },
     { id: 'generator', label: 'Scheme Generator', href: '#generator' },
     { id: 'inspector', label: 'Color Inspector', href: '#inspector' },
-    { id: 'collections', label: 'Collections', href: '#collections', badge: 'Phase 6', disabled: true },
   ];
 
   function toggleMobileMenu() {
@@ -53,7 +53,7 @@
           <span class="text-[10px] uppercase font-mono tracking-wider text-muted-foreground -mt-1">Color Toolkit</span>
         </div>
       </a>
-      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 5</Badge>
+      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 6</Badge>
     </div>
 
     <!-- Desktop Navigation -->

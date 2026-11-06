@@ -2,6 +2,7 @@
   import Copy from 'lucide-svelte/icons/copy';
   import Check from 'lucide-svelte/icons/check';
   import Sparkles from 'lucide-svelte/icons/sparkles';
+  import FolderPlus from 'lucide-svelte/icons/folder-plus';
   import { copyToClipboard } from '../../utils/clipboard';
   import { getContrastColor, isLightColor, formatHex } from '../../utils/color-utils';
   import type { ColorApiResponse } from '../../types/color';
@@ -9,9 +10,10 @@
   interface Props {
     hex: string;
     colorData?: ColorApiResponse | null;
+    onsave?: (color: { hex: string; name?: string }) => void;
   }
 
-  let { hex, colorData = null }: Props = $props();
+  let { hex, colorData = null, onsave }: Props = $props();
 
   let copied = $state(false);
   let copyTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -32,6 +34,15 @@
       copyTimeout = setTimeout(() => {
         copied = false;
       }, 2000);
+    }
+  }
+
+  function handleSaveClick() {
+    if (onsave) {
+      onsave({
+        hex: formattedHex,
+        name: colorData?.name?.value || undefined,
+      });
     }
   }
 </script>
@@ -63,22 +74,37 @@
         {/if}
       </div>
 
-      <!-- Quick Copy HEX Button on Swatch -->
-      <button
-        type="button"
-        onclick={handleCopy}
-        aria-label="Copy HEX {formattedHex} to clipboard"
-        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer backdrop-blur-md border shadow-sm hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-        style="background-color: {isLight ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.95)'}; color: {isLight ? '#FFFFFF' : '#18181B'}; border-color: {isLight ? '#000000' : '#FFFFFF'};"
-      >
-        {#if copied}
-          <Check class="w-3.5 h-3.5 text-emerald-500" aria-hidden="true" />
-          <span>Copied!</span>
-        {:else}
-          <Copy class="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Copy HEX</span>
+      <!-- Quick Action Buttons on Swatch -->
+      <div class="flex items-center gap-2">
+        {#if onsave}
+          <button
+            type="button"
+            onclick={handleSaveClick}
+            aria-label="Save this color as a palette"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer backdrop-blur-md border shadow-sm hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            style="background-color: {isLight ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.95)'}; color: {isLight ? '#FFFFFF' : '#18181B'}; border-color: {isLight ? '#000000' : '#FFFFFF'};"
+          >
+            <FolderPlus class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+            <span class="hidden sm:inline">Save Palette</span>
+          </button>
         {/if}
-      </button>
+
+        <button
+          type="button"
+          onclick={handleCopy}
+          aria-label="Copy HEX {formattedHex} to clipboard"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer backdrop-blur-md border shadow-sm hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          style="background-color: {isLight ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.95)'}; color: {isLight ? '#FFFFFF' : '#18181B'}; border-color: {isLight ? '#000000' : '#FFFFFF'};"
+        >
+          {#if copied}
+            <Check class="w-3.5 h-3.5 text-emerald-500" aria-hidden="true" />
+            <span>Copied!</span>
+          {:else}
+            <Copy class="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Copy HEX</span>
+          {/if}
+        </button>
+      </div>
     </div>
 
     <!-- Bottom Swatch Content: Name & Large HEX Value -->

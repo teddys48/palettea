@@ -4,11 +4,11 @@ Name: Palettea
 Tagline: Explore colors. Build harmony.
 Description: A web-based color toolkit for color exploration, palette generation, conversion, accessibility checks, and palette management.
 Current Status
-- Overall: Phase 5 complete; ready for review / Phase 6
-- Current phase: Phase 6 — Palette Management (ready to start upon authorization)
-- Last updated: 2026-11-05
+- Overall: Phase 6 complete; ready for review / Phase 7
+- Current phase: Phase 7 — Export & Developer Tools (ready to start upon authorization)
+- Last updated: 2026-11-06
 - Repository initialized: Initialized with Git & Bun
-- Build status: Passing (Typecheck: 0 errors/0 warnings; Tests: 90 passed / 0 failed across 6 test suites; Build: 0 errors)
+- Build status: Passing (Typecheck: 0 errors/0 warnings; Tests: 130 passed / 0 failed across 8 test suites; Build: 0 errors in 1.77s)
 Update this file at the end of every development phase. Only mark items complete after verifying them.
 
 Product & Design Decisions
@@ -112,18 +112,21 @@ Acceptance criteria:
 - [x] Thresholds are correct and documented
 - [x] Results do not rely on color alone
 Phase 6 — Palette Management
-Status: ⬜ Not started
+Status: ✅ Complete
 
 Scope:
-- [ ] Save and remove saved palettes
-- [ ] LocalStorage persistence
-- [ ] Rename saved palettes
-- [ ] Recently used colors
-- [ ] Favorites / custom collections (review scope before implementation)
+- [x] Save and remove saved palettes
+- [x] LocalStorage persistence with versioning and validation
+- [x] Rename and edit saved palettes & descriptions
+- [x] Color manipulation (add, remove with 1-color guard, and reorder colors)
+- [x] Collections management (create, rename, delete with safe unassign)
+- [x] Search (by name, description, hex, color name, and collection name)
+- [x] Filter (all, unassigned, collection tabs) & Sorting (updated, created, name A-Z, name Z-A)
+- [x] Bi-directional integrations with Scheme Generator, Color Inspector, Converter, and Contrast Checker
 Acceptance criteria:
-- [ ] Saved data persists across reloads
-- [ ] Malformed data and storage errors are handled gracefully
-- [ ] Users can manage saved items clearly
+- [x] Saved data persists across reloads with schema versioning (`palettea:palettes`, `palettea:collections`, `palettea:storage-version`)
+- [x] Malformed data, JSON parsing errors, and storage quota exceeded errors are handled gracefully without data loss
+- [x] Users can manage saved items clearly with responsive grid, modals, and confirmation dialogs
 Phase 7 — Export & Developer Tools
 Status: ⬜ Not started
 
@@ -170,9 +173,9 @@ Endpoint	Purpose	Planned phase
 
 Official documentation: https://www.thecolorapi.com/
 Current / Next Actions
-1. Phase 5 Contrast & Accessibility Checker completed, tested (90 unit tests), and verified.
-2. Review Phase 5 results.
-3. Proceed to Phase 6 (Palette Management) upon authorization.
+1. Phase 6 Palette Management & Collections completed, tested (130 unit tests), and verified.
+2. Review Phase 6 results.
+3. Proceed to Phase 7 (Export & Developer Tools) upon authorization.
 Development Log
 2026-11-03 — Project planning
 - Selected product name Palettea.
@@ -226,7 +229,7 @@ Development Log
 - Verified full test suite and build: `bun run check` (0 errors, 0 warnings), `bun test` (66 passed, 0 failed across 5 files), `bun run build` (production build completed cleanly in ~800ms).
 2026-11-05 — Phase 5 completed: Contrast & Accessibility Checker
 - Implemented `src/lib/types/contrast.ts`: TypeScript models for WCAG levels ('AA' | 'AAA'), criteria specifications, contrast presets, suggestions, and evaluations.
-- Implemented core contrast math in `src/lib/utils/color-utils.ts`: `calculateContrastRatio(lum1, lum2)` using WCAG relative luminance formula `(L1 + 0.05) / (L2 + 0.05)`, `getContrastRatio(hex1, hex2)` with order symmetry, and `formatContrastRatio(ratio)`.
+- Implemented core contrast math in `src/lib/utils/color-utils.ts`: `calculateContrastRatio(lum1, lum2)` using WCAG relative luminance formula `(L1 + 0.05) / (L2 + 0.05)`, `getContrastRatio(hex1, hex2)` with order symmetry, and `formatContrastRatio(ratio)`.\
 - Implemented `src/lib/utils/contrast-utils.ts`: `evaluateWcagCompliance` evaluating 5 independent WCAG 2.2 criteria: Normal Text AA (4.5:1), Large Text AA (3.0:1), Normal Text AAA (7.0:1), Large Text AAA (4.5:1), and UI Components AA (3.0:1).
 - Implemented local deterministic color improvement algorithm `generateContrastSuggestions`: preserves user's background color by default, searches closest HSL lightness adjustment with identical hue/saturation, verifies each recommendation against contrast engine (`resultingRatio >= targetRatio`), and provides 1-click apply action.
 - Built `src/lib/components/contrast/ContrastColorInput.svelte`: dual color picker and validated HEX inputs, live relative luminance display, swap foreground/background button, and 6 curated high-contrast presets.
@@ -237,3 +240,21 @@ Development Log
 - Integrated into `Navbar.svelte` (added nav item, bumped badge to Phase 5), `App.svelte` (active default), and `WorkspaceHero.svelte` (primary section, quick switcher pill, roadmap context card).
 - Created `src/lib/utils/contrast-utils.test.ts` (23 unit tests) and expanded `src/lib/utils/color-utils.test.ts` (16 unit tests).
 - Verified full validation suite: `bun run check` (0 errors, 0 warnings), `bun test` (90 passed, 0 failed across 6 test files), `bun run build` (production build completed in 2.96s).
+2026-11-06 — Phase 6 completed: Palette Management & Collections
+- Implemented `src/lib/types/palette.ts` and `src/lib/types/collection.ts`: clean TypeScript interfaces for `Palette`, `PaletteColor`, `Collection`, `PaletteSortOption`, `CreatePaletteInput`, and `UpdatePaletteInput`.
+- Implemented `src/lib/services/storage-service.ts`: isolated LocalStorage persistence engine with namespaced keys (`palettea:palettes`, `palettea:collections`, `palettea:storage-version`), schema versioning (v1), corrupted JSON parsing protection without data loss, structural schema validation, storage availability probe, and `QuotaExceededError` detection.
+- Implemented `src/lib/services/palette-service.ts`: pure testable business logic for palette and collection manipulation (entity creation, updates, additions, color deletions with 1-color guard, color reordering with 0..n indexing, collection creation/updates, invariant-safe collection deletion that unassigns palettes, multi-attribute search, collection filters, and sorting).
+- Implemented `src/lib/stores/palette-store.svelte.ts`: Svelte 5 reactive store utilizing runes (`$state`, `$derived.by`) for palettes, collections, active filter tabs, search query, sorting mode, and transient toast feedback.
+- Implemented `src/lib/components/ui/Modal.svelte` and `src/lib/components/ui/ConfirmDialog.svelte`: accessible modal shells with focus trapping, escape-key support, backdrop dismissal, and confirmation gates for destructive actions.
+- Implemented `src/lib/components/palette/SavePaletteDialog.svelte`: reusable palette creation modal supporting custom names, descriptions, collection assignment, and inline collection creation.
+- Implemented `src/lib/components/palette/PaletteCard.svelte`: responsive grid card with tactile swatch preview, hover labels, collection badges, color count, formatted date, copy-all-hexes action, edit trigger, and delete confirmation.
+- Implemented `src/lib/components/palette/PaletteDetailModal.svelte`: full-featured view and editor modal with individual swatch inspection, hex copying, color reordering, color addition/removal, and direct handoff buttons to Color Inspector, Contrast Checker, and Color Converter.
+- Implemented `src/lib/components/collection/CollectionManagerModal.svelte`: comprehensive collection management dialog for creating, renaming, editing descriptions, viewing palette counts, and safely deleting collections.
+- Implemented `src/lib/components/palette/PaletteManager.svelte`: orchestrator component featuring collection filter tabs, real-time search, sort dropdown, responsive card grid, and context-specific empty states.
+- Integrated across existing features:
+  - `SchemeGenerator.svelte` & `SchemePalette.svelte`: added "Save Palette" button pre-populating current scheme colors and title into `SavePaletteDialog`.
+  - `ColorInspector.svelte` & `ColorPreview.svelte`: added "Save Palette" action allowing 1-click palette creation from inspected color.
+  - `WorkspaceHero.svelte`: integrated Palette Management as primary section, added hero quick switcher pill, wired cross-feature color handoffs, and updated roadmap card.
+  - `Navbar.svelte`: activated "Palettes & Collections" navigation item and bumped header badge to Phase 6.
+- Added 40 new unit tests across 2 new test suites (`storage-service.test.ts` with 19 tests, `palette-service.test.ts` with 21 tests), expanding total test suite to 130 passing tests.
+- Verified full validation suite: `bun run check` (0 errors, 0 warnings), `bun test` (130 passed, 0 failed across 8 test suites), `bun run build` (production build completed in 1.77s).

@@ -12,12 +12,14 @@
     initialHex?: string;
     inspectorHex?: string;
     oninspectColor?: (cleanHex: string) => void;
+    onsavePalette?: (colors: Array<{ hex: string; name?: string }>, title?: string) => void;
   }
 
   let {
     initialHex = '4F46E5',
     inspectorHex,
     oninspectColor,
+    onsavePalette,
   }: Props = $props();
 
   let baseHex = $state('4F46E5');
@@ -215,6 +217,7 @@
       isLoading={status === 'loading' && !schemeData}
       skeletonCount={count}
       oninspect={oninspectColor}
+      onsave={onsavePalette ? (colors: Array<{ hex: string; name?: string }>) => onsavePalette?.(colors, `Scheme ${harmonyMode.charAt(0).toUpperCase() + harmonyMode.slice(1)} #${baseHex}`) : undefined}
     />
   {/if}
 </div>

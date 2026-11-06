@@ -6,12 +6,15 @@
   import Search from 'lucide-svelte/icons/search';
   import ArrowRightLeft from 'lucide-svelte/icons/arrow-right-left';
   import Eye from 'lucide-svelte/icons/eye';
+  import Layers from 'lucide-svelte/icons/layers';
   import Button from '../ui/Button.svelte';
   import Badge from '../ui/Badge.svelte';
   import ColorInspector from '../color/ColorInspector.svelte';
   import SchemeGenerator from '../scheme/SchemeGenerator.svelte';
   import ColorConverter from '../converter/ColorConverter.svelte';
   import ContrastChecker from '../contrast/ContrastChecker.svelte';
+  import PaletteManager from '../palette/PaletteManager.svelte';
+  import SavePaletteDialog from '../palette/SavePaletteDialog.svelte';
   import ColorSwatchPreview from './ColorSwatchPreview.svelte';
   import type { PreviewPalette } from '../../types';
 
@@ -20,7 +23,7 @@
     onselectSection?: (id: string) => void;
   }
 
-  let { activeNav = 'contrast', onselectSection }: Props = $props();
+  let { activeNav = 'collections', onselectSection }: Props = $props();
 
   const previewPalettes: PreviewPalette[] = [
     {
@@ -71,6 +74,11 @@
   let activeContrastFg = $state('#191919');
   let activeContrastBg = $state('#FFFFFF');
 
+  // External save palette dialog trigger
+  let isSavePaletteOpen = $state(false);
+  let savePaletteColors = $state<Array<{ hex: string; name?: string }>>([]);
+  let savePaletteName = $state('');
+
   const currentPalette = $derived(previewPalettes[selectedPaletteIndex] ?? previewPalettes[0]!);
 
   function cyclePresetPalette() {
@@ -116,6 +124,48 @@
     }
   }
 
+  function handleInspectColorFromPalette(cleanHex: string) {
+    activeInspectHex = cleanHex;
+    activeConverterHex = cleanHex;
+    activeContrastFg = '#' + cleanHex;
+    const inspectorElem = document.getElementById('inspector-section') || document.getElementById('color-inspector-section');
+    if (inspectorElem) {
+      inspectorElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function handleContrastColorFromPalette(hex: string, role: 'fg' | 'bg') {
+    if (role === 'fg') {
+      activeContrastFg = hex;
+    } else {
+      activeContrastBg = hex;
+    }
+    const contrastElem = document.getElementById('contrast-section') || document.getElementById('contrast');
+    if (contrastElem) {
+      contrastElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function handleConvertColorFromPalette(cleanHex: string) {
+    activeConverterHex = cleanHex;
+    const converterElem = document.getElementById('converter-section') || document.getElementById('converter');
+    if (converterElem) {
+      converterElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function handleSaveFromScheme(colors: Array<{ hex: string; name?: string }>, title?: string) {
+    savePaletteColors = colors;
+    savePaletteName = title || 'Harmonic Scheme';
+    isSavePaletteOpen = true;
+  }
+
+  function handleSaveFromInspector(color: { hex: string; name?: string }) {
+    savePaletteColors = [color];
+    savePaletteName = color.name ? `${color.name} Palette` : 'Inspected Color';
+    isSavePaletteOpen = true;
+  }
+
   function scrollToSection(id: string) {
     if (onselectSection) {
       onselectSection(id);
@@ -135,19 +185,31 @@
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 5 Active</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Phase 6 Active</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
-      Build harmony. Explore colors.
+      Explore colors. Build harmony.
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      A modern color toolkit to evaluate WCAG 2.2 contrast ratios, convert formats in real-time, generate harmonic schemes, and inspect color properties with mathematical precision.
+      A modern color toolkit to organize palette collections, evaluate WCAG 2.2 contrast ratios, convert formats in real-time, generate harmonic schemes, and inspect color properties.
     </p>
 
     <!-- Quick Tool Switcher Pills -->
     <div class="pt-2 flex flex-wrap items-center justify-center gap-2">
+      <button
+        type="button"
+        onclick={() => scrollToSection('collections')}
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {activeNav === 'collections' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
+      >
+        <Layers class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+        <span>Palettes & Collections</span>
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+          Phase 6
+        </span>
+      </button>
+
       <button
         type="button"
         onclick={() => scrollToSection('contrast')}
@@ -155,7 +217,7 @@
       >
         <Eye class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Contrast Checker</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
           Phase 5
         </span>
       </button>
@@ -198,8 +260,17 @@
     </div>
   </div>
 
-  <!-- Primary Feature: Contrast & Accessibility Checker (Phase 5) -->
-  <div id="contrast-section" class="scroll-mt-24 space-y-3">
+  <!-- Primary Feature: Palette Management & Collections (Phase 6) -->
+  <div id="collections-section" class="scroll-mt-24 space-y-3">
+    <PaletteManager
+      oninspectColor={handleInspectColorFromPalette}
+      oncontrastColor={handleContrastColorFromPalette}
+      onconvertColor={handleConvertColorFromPalette}
+    />
+  </div>
+
+  <!-- Secondary Feature: Contrast & Accessibility Checker (Phase 5) -->
+  <div id="contrast-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
         <h2 class="text-lg font-bold text-foreground flex items-center gap-2">
@@ -211,7 +282,7 @@
         </p>
       </div>
 
-      <Badge variant="accent" size="sm">Phase 5</Badge>
+      <Badge variant="neutral" size="sm">Phase 5</Badge>
     </div>
 
     <ContrastChecker
@@ -221,7 +292,7 @@
     />
   </div>
 
-  <!-- Secondary Feature: Color Converter (Phase 4) -->
+  <!-- Tertiary Feature: Color Converter (Phase 4) -->
   <div id="converter-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -243,7 +314,7 @@
     />
   </div>
 
-  <!-- Tertiary Feature: Color Scheme Generator (Phase 3) -->
+  <!-- Quaternary Feature: Color Scheme Generator (Phase 3) -->
   <div id="generator-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -263,10 +334,11 @@
       initialHex={activeSchemeHex}
       inspectorHex={activeInspectHex}
       oninspectColor={handleInspectColorFromScheme}
+      onsavePalette={handleSaveFromScheme}
     />
   </div>
 
-  <!-- Quaternary Feature: Color Picker & Inspector (Phase 2) -->
+  <!-- Quinary Feature: Color Picker & Inspector (Phase 2) -->
   <div id="inspector-section" class="scroll-mt-24 pt-8 border-t border-border space-y-4">
     <div id="color-inspector-section" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-2">
       <div>
@@ -282,7 +354,10 @@
       <Badge variant="neutral" size="sm">Phase 2</Badge>
     </div>
 
-    <ColorInspector initialHex={activeInspectHex} />
+    <ColorInspector
+      initialHex={activeInspectHex}
+      onsavePalette={handleSaveFromInspector}
+    />
   </div>
 
   <!-- Curated Preset Palettes Section -->
@@ -334,7 +409,7 @@
   </div>
 
   <!-- Roadmap Context Cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-6 border-t border-border">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 pt-6 border-t border-border">
     <!-- Card 1: Phase 1 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
@@ -407,16 +482,34 @@
       </div>
     </div>
 
-    <!-- Card 5: Phase 5 Active -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+    <!-- Card 5: Phase 5 Complete -->
+    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Phase 5 Active</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Contrast</span>
+          <Badge variant="neutral">Completed</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 5</span>
         </div>
         <h3 class="text-sm font-bold text-foreground mb-1">Contrast & Accessibility</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
           WCAG 2.2 contrast calculations (AA/AAA checks), live context preview, and smart color improvement suggestions.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+        <Check class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Verified with tests</span>
+      </div>
+    </div>
+
+    <!-- Card 6: Phase 6 Active -->
+    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <Badge variant="accent">Phase 6 Active</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Palettes</span>
+        </div>
+        <h3 class="text-sm font-bold text-foreground mb-1">Palette Management</h3>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          LocalStorage persistence, collections grouping, search, sorting, full palette CRUD, and feature integration.
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
@@ -426,3 +519,11 @@
     </div>
   </div>
 </section>
+
+<!-- Global Context Save Palette Dialog -->
+<SavePaletteDialog
+  isOpen={isSavePaletteOpen}
+  onclose={() => (isSavePaletteOpen = false)}
+  initialColors={savePaletteColors}
+  initialName={savePaletteName}
+/>
