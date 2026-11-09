@@ -196,7 +196,7 @@
           Scheme Generation Failed
         </h3>
         <p class="text-xs sm:text-sm text-red-700 dark:text-red-300 font-mono">
-          {errorMessage ?? 'Could not generate scheme from The Color API.'}
+          {errorMessage ?? 'Could not generate color scheme. Please try again.'}
         </p>
       </div>
 

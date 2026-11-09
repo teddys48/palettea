@@ -119,7 +119,7 @@
     </div>
 
     <div id="source-tabs" class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-background border border-border">
-      <!-- Saved Palettes from Phase 6 -->
+      <!-- Saved Palettes -->
       <button
         type="button"
         onclick={() => {
@@ -137,7 +137,7 @@
         </span>
       </button>
 
-      <!-- Scheme Generator from Phase 3 -->
+      <!-- Scheme Generator -->
       <button
         type="button"
         onclick={selectScheme}
@@ -147,7 +147,7 @@
         <span>Scheme Generator</span>
       </button>
 
-      <!-- Inspector Color from Phase 2 -->
+      <!-- Inspector Color -->
       <button
         type="button"
         onclick={selectInspector}
@@ -157,7 +157,7 @@
         <span>Color Inspector</span>
       </button>
 
-      <!-- Curated Presets from Phase 1 -->
+      <!-- Curated Presets -->
       <button
         type="button"
         onclick={() => selectPreset(curatedPresets[0]!)}

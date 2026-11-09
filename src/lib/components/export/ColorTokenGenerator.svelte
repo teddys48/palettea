@@ -100,7 +100,7 @@
           <Badge variant="accent" size="sm">Dev Tools</Badge>
         </h3>
         <p class="text-xs text-muted-foreground mt-0.5">
-          Map palette colors to semantic design tokens. Edit tokens before exporting without fabricating colors.
+          Map palette colors to semantic design tokens (Primary, Secondary, Surface, Accent) ready for design systems.
         </p>
       </div>
     </div>
@@ -220,7 +220,7 @@
         <span class="font-semibold">Unassigned Standard Roles ({unassignedRoles.length}):</span>
       </div>
       <p class="text-[11px] text-muted-foreground">
-        Palettea does not fabricate random colors. You can map available palette colors to these roles:
+        You can map available palette colors to any of these standard design roles:
       </p>
 
       <div class="flex flex-wrap gap-1.5 pt-1">

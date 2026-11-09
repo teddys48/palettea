@@ -135,7 +135,7 @@
           Color Inspection Error
         </h3>
         <p class="text-xs text-red-700 dark:text-red-300 mt-1 max-w-md mx-auto">
-          {errorMessage || 'Unable to retrieve color data from API.'}
+          {errorMessage || 'Unable to retrieve color data. Please try again.'}
         </p>
       </div>
       <div>

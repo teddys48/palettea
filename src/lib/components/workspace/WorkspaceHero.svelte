@@ -194,7 +194,7 @@
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 8 • Production Ready</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Studio Edition</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
@@ -202,7 +202,7 @@
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      A complete color toolkit for exploration, harmony schemes, format conversions, WCAG accessibility evaluation, and developer export tools with zero backend dependency.
+      A complete color suite for palette exploration, harmony schemes, format conversions, WCAG accessibility checks, and production code export.
     </p>
 
     <!-- Quick Tool Switcher Pills -->
@@ -214,9 +214,6 @@
       >
         <Download class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Export & Dev Tools</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
-          Phase 7
-        </span>
       </button>
 
       <button
@@ -226,9 +223,6 @@
       >
         <Layers class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Palettes & Collections</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
-          Phase 6
-        </span>
       </button>
 
       <button
@@ -238,9 +232,6 @@
       >
         <Eye class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Contrast Checker</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
-          Phase 5
-        </span>
       </button>
 
       <button
@@ -250,9 +241,6 @@
       >
         <ArrowRightLeft class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Color Converter</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
-          Phase 4
-        </span>
       </button>
 
       <button
@@ -262,9 +250,6 @@
       >
         <Palette class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Scheme Generator</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
-          Phase 3
-        </span>
       </button>
 
       <button
@@ -274,14 +259,11 @@
       >
         <Search class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Color Inspector</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
-          Phase 2
-        </span>
       </button>
     </div>
   </div>
 
-  <!-- Primary Feature: Export & Developer Tools (Phase 7) -->
+  <!-- Primary Feature: Export & Developer Tools -->
   <div id="export-section" class="scroll-mt-24 space-y-3">
     <ExportWorkspace
       schemeColors={currentSchemeColors}
@@ -289,7 +271,7 @@
     />
   </div>
 
-  <!-- Secondary Feature: Palette Management & Collections (Phase 6) -->
+  <!-- Secondary Feature: Palette Management & Collections -->
   <div id="collections-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -302,7 +284,7 @@
         </p>
       </div>
 
-      <Badge variant="neutral" size="sm">Phase 6</Badge>
+      <Badge variant="neutral" size="sm">Library</Badge>
     </div>
 
     <PaletteManager
@@ -312,7 +294,7 @@
     />
   </div>
 
-  <!-- Tertiary Feature: Contrast & Accessibility Checker (Phase 5) -->
+  <!-- Tertiary Feature: Contrast & Accessibility Checker -->
   <div id="contrast-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -325,7 +307,7 @@
         </p>
       </div>
 
-      <Badge variant="neutral" size="sm">Phase 5</Badge>
+      <Badge variant="neutral" size="sm">WCAG 2.2</Badge>
     </div>
 
     <ContrastChecker
@@ -335,7 +317,7 @@
     />
   </div>
 
-  <!-- Quaternary Feature: Color Converter (Phase 4) -->
+  <!-- Quaternary Feature: Color Converter -->
   <div id="converter-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -348,7 +330,7 @@
         </p>
       </div>
 
-      <Badge variant="neutral" size="sm">Phase 4</Badge>
+      <Badge variant="neutral" size="sm">Multi-format</Badge>
     </div>
 
     <ColorConverter
@@ -357,7 +339,7 @@
     />
   </div>
 
-  <!-- Quinary Feature: Color Scheme Generator (Phase 3) -->
+  <!-- Quinary Feature: Color Scheme Generator -->
   <div id="generator-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -370,7 +352,7 @@
         </p>
       </div>
 
-      <Badge variant="neutral" size="sm">Phase 3</Badge>
+      <Badge variant="neutral" size="sm">Harmonies</Badge>
     </div>
 
     <SchemeGenerator
@@ -382,7 +364,7 @@
     />
   </div>
 
-  <!-- Senary Feature: Color Picker & Inspector (Phase 2) -->
+  <!-- Senary Feature: Color Picker & Inspector -->
   <div id="inspector-section" class="scroll-mt-24 pt-8 border-t border-border space-y-4">
     <div id="color-inspector-section" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-2">
       <div>
@@ -395,7 +377,7 @@
         </p>
       </div>
 
-      <Badge variant="neutral" size="sm">Phase 2</Badge>
+      <Badge variant="neutral" size="sm">Inspector</Badge>
     </div>
 
     <ColorInspector
@@ -451,149 +433,73 @@
     />
   </div>
 
-  <!-- Roadmap Context Cards: Complete 8-Phase Delivery -->
+  <!-- Product Feature Highlights -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6 border-t border-border">
-    <!-- Card 1: Phase 1 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 1</span>
+          <Badge variant="accent">Design</Badge>
+          <Palette class="w-4 h-4 text-accent" aria-hidden="true" />
         </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Design System & Shell</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Color Schemes & Harmonies</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          Modern minimalist tokens, responsive layout, Svelte 5 runes, strict TypeScript, light/dark theme.
+          Generate balanced palettes using classical color theory including complementary, analogous, triadic, and monochromatic schemes.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-        <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified</span>
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
+        <Sparkles class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Instant Harmonies</span>
       </div>
     </div>
 
-    <!-- Card 2: Phase 2 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 2</span>
+          <Badge variant="accent">Accessibility</Badge>
+          <Eye class="w-4 h-4 text-accent" aria-hidden="true" />
         </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Color Picker & Inspector</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Contrast & Readability</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          The Color API `/id` endpoint, interactive HEX picker, format converters (HEX, RGB, HSL, HSV, CMYK, XYZ).
+          Verify contrast compliance with WCAG 2.2 AA and AAA standards with live text previews and automated contrast improvements.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified with tests</span>
+        <span>WCAG 2.2 Verified</span>
       </div>
     </div>
 
-    <!-- Card 3: Phase 3 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 3</span>
+          <Badge variant="accent">Precision</Badge>
+          <ArrowRightLeft class="w-4 h-4 text-accent" aria-hidden="true" />
         </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Color Scheme Generator</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Format Conversion</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          The Color API `/scheme` endpoint, harmony modes (Complementary, Analogous, Triadic, Split, Monochrome), Space shortcut.
+          Convert color values seamlessly between HEX, RGB, HSL, HSV, CMYK, and CSS formats with instant copy support.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified with tests</span>
+        <span>Multi-format Ready</span>
       </div>
     </div>
 
-    <!-- Card 4: Phase 4 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 4</span>
+          <Badge variant="accent">Export</Badge>
+          <Download class="w-4 h-4 text-accent" aria-hidden="true" />
         </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Color Converter</h3>
+        <h3 class="text-sm font-bold text-foreground mb-1">Developer Code Export</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          Real-time mathematical conversion across HEX, RGB, HSL, HSV, and CMYK with validation and zero API latency.
+          Export production-ready tokens and stylesheets for Tailwind CSS, CSS Custom Properties, JSON design tokens, and vector SVGs.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified with tests</span>
-      </div>
-    </div>
-
-    <!-- Card 5: Phase 5 Complete -->
-    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 5</span>
-        </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Contrast & Accessibility</h3>
-        <p class="text-xs text-muted-foreground leading-relaxed">
-          WCAG 2.2 contrast calculations (AA/AAA checks), live context preview, and smart color improvement suggestions.
-        </p>
-      </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-        <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified with tests</span>
-      </div>
-    </div>
-
-    <!-- Card 6: Phase 6 Complete -->
-    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 6</span>
-        </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Palette Management</h3>
-        <p class="text-xs text-muted-foreground leading-relaxed">
-          LocalStorage persistence, collections grouping, search, sorting, full palette CRUD, and feature integration.
-        </p>
-      </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-        <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified with tests</span>
-      </div>
-    </div>
-
-    <!-- Card 7: Phase 7 Complete -->
-    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <Badge variant="neutral">Completed</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 7</span>
-        </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Export & Dev Tools</h3>
-        <p class="text-xs text-muted-foreground leading-relaxed">
-          Local zero-backend export for CSS variables, Tailwind v4 & v3, JSON, vector SVG, and semantic token tools.
-        </p>
-      </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-        <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified with tests</span>
-      </div>
-    </div>
-
-    <!-- Card 8: Phase 8 Production Ready -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Production Ready</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Phase 8</span>
-        </div>
-        <h3 class="text-sm font-bold text-foreground mb-1">Polish & Production</h3>
-        <p class="text-xs text-muted-foreground leading-relaxed">
-          Comprehensive functional audit, WCAG 2.2 accessibility, responsive UX, multi-stage Docker containerization, and docs.
-        </p>
-      </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-        <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Verified & production ready</span>
+        <span>Tailwind & CSS Tokens</span>
       </div>
     </div>
   </div>

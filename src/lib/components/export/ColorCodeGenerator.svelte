@@ -103,7 +103,7 @@
           </span>
         </h3>
         <p class="text-xs text-muted-foreground mt-0.5">
-          Instant developer representations generated locally via Phase 4 color engine.
+          Instant color code formats ready to copy into your CSS, Tailwind, or configuration.
         </p>
       </div>
     </div>

@@ -104,7 +104,7 @@
         <Badge variant="accent" size="sm">Dev Tools</Badge>
       </div>
       <p class="text-xs text-muted-foreground">
-        Zero-backend local generators: CSS Custom Properties, Tailwind CSS (v4 & v3), valid JSON, and vector SVG swatches.
+        Export color palettes to CSS Custom Properties, Tailwind CSS, clean JSON, and vector SVG swatches.
       </p>
     </div>
 

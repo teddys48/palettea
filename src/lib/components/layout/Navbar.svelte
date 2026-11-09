@@ -54,7 +54,7 @@
           <span class="text-[10px] uppercase font-mono tracking-wider text-muted-foreground -mt-1">Color Toolkit</span>
         </div>
       </a>
-      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 8 • Production</Badge>
+      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">v1.0</Badge>
     </div>
 
     <!-- Desktop Navigation -->

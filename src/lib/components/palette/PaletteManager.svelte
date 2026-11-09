@@ -98,7 +98,7 @@
         <Badge variant="accent" size="sm">Saved Palettes</Badge>
       </div>
       <p class="text-xs text-muted-foreground mt-1">
-        Create, edit, organize, and inspect saved color palettes with offline LocalStorage persistence.
+        Create, edit, organize, and inspect saved color palettes right in your browser.
       </p>
     </div>
 

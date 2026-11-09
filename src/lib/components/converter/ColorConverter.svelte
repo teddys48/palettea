@@ -195,7 +195,7 @@
     >
       <div>
         <div class="text-xs font-mono uppercase tracking-wider opacity-80">
-          Canonical HEX
+          HEX Value
         </div>
         <div class="text-3xl sm:text-4xl lg:text-5xl font-black font-mono tracking-tight">
           {lastValidResult.hex.value}

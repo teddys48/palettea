@@ -11,9 +11,9 @@
     </div>
 
     <div class="flex flex-wrap items-center justify-center gap-4 text-muted-foreground">
-      <span>Bun + Vite + Svelte 5 + Tailwind</span>
+      <span>Crafted for designers and developers</span>
       <span>•</span>
-      <span class="text-accent font-medium">Phase 8 • Production Ready</span>
+      <span class="text-accent font-medium">Fast, offline & privacy-focused</span>
     </div>
   </div>
 </footer>
