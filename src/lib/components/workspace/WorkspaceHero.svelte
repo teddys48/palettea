@@ -194,7 +194,7 @@
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 7 Active</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Phase 8 • Production Ready</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
@@ -202,7 +202,7 @@
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      A modern color toolkit to export developer-ready CSS variables, Tailwind configurations, JSON palettes, and vector SVG previews with zero backend dependency.
+      A complete color toolkit for exploration, harmony schemes, format conversions, WCAG accessibility evaluation, and developer export tools with zero backend dependency.
     </p>
 
     <!-- Quick Tool Switcher Pills -->
@@ -214,7 +214,7 @@
       >
         <Download class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Export & Dev Tools</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
           Phase 7
         </span>
       </button>
@@ -451,8 +451,8 @@
     />
   </div>
 
-  <!-- Roadmap Context Cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4 pt-6 border-t border-border">
+  <!-- Roadmap Context Cards: Complete 8-Phase Delivery -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6 border-t border-border">
     <!-- Card 1: Phase 1 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
@@ -561,12 +561,12 @@
       </div>
     </div>
 
-    <!-- Card 7: Phase 7 Active -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+    <!-- Card 7: Phase 7 Complete -->
+    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Phase 7 Active</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Export</span>
+          <Badge variant="neutral">Completed</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 7</span>
         </div>
         <h3 class="text-sm font-bold text-foreground mb-1">Export & Dev Tools</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
@@ -575,7 +575,25 @@
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Live & verified with tests</span>
+        <span>Verified with tests</span>
+      </div>
+    </div>
+
+    <!-- Card 8: Phase 8 Production Ready -->
+    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <Badge variant="accent">Production Ready</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 8</span>
+        </div>
+        <h3 class="text-sm font-bold text-foreground mb-1">Polish & Production</h3>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          Comprehensive functional audit, WCAG 2.2 accessibility, responsive UX, multi-stage Docker containerization, and docs.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+        <Check class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Verified & production ready</span>
       </div>
     </div>
   </div>

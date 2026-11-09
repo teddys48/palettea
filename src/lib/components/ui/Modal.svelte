@@ -23,13 +23,50 @@
   }: Props = $props();
 
   let dialogElement = $state<HTMLDivElement | null>(null);
+  let previouslyFocusedElement: HTMLElement | null = null;
+
   const titleId = `modal-title-${Math.random().toString(36).substring(2, 9)}`;
   const descId = `modal-desc-${Math.random().toString(36).substring(2, 9)}`;
 
+  function getFocusableElements(): HTMLElement[] {
+    if (!dialogElement) return [];
+    const selector = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(dialogElement.querySelectorAll<HTMLElement>(selector)).filter(
+      (el) => el.offsetParent !== null && !el.hasAttribute('aria-hidden')
+    );
+  }
+
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && isOpen) {
+    if (!isOpen) return;
+
+    if (e.key === 'Escape') {
       e.stopPropagation();
       onclose();
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      const focusables = getFocusableElements();
+      if (focusables.length === 0) {
+        e.preventDefault();
+        return;
+      }
+
+      const firstEl = focusables[0]!;
+      const lastEl = focusables[focusables.length - 1]!;
+      const activeEl = document.activeElement;
+
+      if (e.shiftKey) {
+        if (activeEl === firstEl || !dialogElement?.contains(activeEl)) {
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if (activeEl === lastEl || !dialogElement?.contains(activeEl)) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
     }
   }
 
@@ -41,16 +78,34 @@
 
   $effect(() => {
     if (isOpen) {
+      if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+        previouslyFocusedElement = document.activeElement;
+      }
       document.body.style.overflow = 'hidden';
-      // Focus modal container
+
+      // Focus first interactive control or the dialog container itself
       setTimeout(() => {
-        dialogElement?.focus();
+        const focusables = getFocusableElements();
+        if (focusables.length > 0) {
+          focusables[0]?.focus();
+        } else {
+          dialogElement?.focus();
+        }
       }, 50);
     } else {
       document.body.style.overflow = '';
+      if (previouslyFocusedElement) {
+        previouslyFocusedElement.focus();
+        previouslyFocusedElement = null;
+      }
     }
+
     return () => {
       document.body.style.overflow = '';
+      if (previouslyFocusedElement) {
+        previouslyFocusedElement.focus();
+        previouslyFocusedElement = null;
+      }
     };
   });
 

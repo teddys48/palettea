@@ -4,9 +4,13 @@ const STORAGE_KEY = 'palettea-theme';
 
 export function getInitialTheme(): Theme {
   if (typeof window === 'undefined') return 'light';
-  const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
-  if (saved === 'light' || saved === 'dark') {
-    return saved;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
+    if (saved === 'light' || saved === 'dark') {
+      return saved;
+    }
+  } catch {
+    // localStorage might be unavailable or restricted (e.g. private mode, iframe)
   }
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }

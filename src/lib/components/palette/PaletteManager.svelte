@@ -95,7 +95,7 @@
           <Layers class="w-5 h-5 text-accent" aria-hidden="true" />
           <span>Palette Management & Collections</span>
         </h2>
-        <Badge variant="accent" size="sm">Phase 6</Badge>
+        <Badge variant="accent" size="sm">Saved Palettes</Badge>
       </div>
       <p class="text-xs text-muted-foreground mt-1">
         Create, edit, organize, and inspect saved color palettes with offline LocalStorage persistence.
@@ -314,9 +314,13 @@
 
 <!-- Floating Toast Feedback Notification -->
 {#if paletteStore.toast}
-  <div class="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-3 duration-200">
+  <div
+    class="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-3 duration-200"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
     <div
-      role="status"
       class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border shadow-neo text-xs font-mono font-medium {paletteStore.toast.type === 'error' ? 'bg-red-50 dark:bg-red-950/80 border-red-300 dark:border-red-800 text-red-800 dark:text-red-200' : 'bg-surface border-border-strong text-foreground'}"
     >
       <span>{paletteStore.toast.text}</span>

@@ -13,7 +13,7 @@
     <div class="flex flex-wrap items-center justify-center gap-4 text-muted-foreground">
       <span>Bun + Vite + Svelte 5 + Tailwind</span>
       <span>•</span>
-      <span class="text-accent font-medium">Phase 1 Foundation</span>
+      <span class="text-accent font-medium">Phase 8 • Production Ready</span>
     </div>
   </div>
 </footer>

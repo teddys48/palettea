@@ -101,7 +101,7 @@
         <h2 class="text-xl font-bold tracking-tight text-foreground">
           Export & Developer Tools
         </h2>
-        <Badge variant="accent" size="sm">Phase 7</Badge>
+        <Badge variant="accent" size="sm">Dev Tools</Badge>
       </div>
       <p class="text-xs text-muted-foreground">
         Zero-backend local generators: CSS Custom Properties, Tailwind CSS (v4 & v3), valid JSON, and vector SVG swatches.

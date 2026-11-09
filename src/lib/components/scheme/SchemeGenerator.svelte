@@ -119,9 +119,14 @@
     loadScheme(baseHex, harmonyMode, count);
   }
 
-  // Keyboard shortcut: Space triggers random base color (with strict focus guards)
+  // Keyboard shortcut: Space triggers random base color (with strict focus & modal guards)
   function handleWindowKeyDown(e: KeyboardEvent) {
     if (e.key === ' ' || e.code === 'Space') {
+      // Do not trigger if any modal dialog is currently open in DOM
+      if (typeof document !== 'undefined' && document.querySelector('[role="dialog"]')) {
+        return;
+      }
+
       const activeEl = document.activeElement;
       if (activeEl) {
         const tagName = activeEl.tagName.toLowerCase();

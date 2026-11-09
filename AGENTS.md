@@ -13,14 +13,14 @@ Product and design direction:
 Use this stack unless the user explicitly changes it:
 - Runtime / package manager: Bun
 - Build tool / dev server: Vite
-- UI framework: Svelte (use the version and conventions established by the repository; prefer Svelte 5 for a new project)
+- UI framework: Svelte 5 (with runes: $state, $derived, $effect)
 - Language: TypeScript (strict mode)
-- Styling: Tailwind CSS
+- Styling: Tailwind CSS v4
 - External color service: The Color API — https://www.thecolorapi.com/
 - HTTP: Native fetch
 - Persistence: LocalStorage
-- Testing: Vitest; add Svelte Testing Library when component tests are needed
-- Containerization: Dockerfile (multi-stage production build)
+- Testing: Bun test runner (`bun test`); Svelte Testing Library when component tests are needed
+- Containerization: Multi-stage Dockerfile (Bun build stage + unprivileged Nginx runtime stage)
 Do not add a backend unless a concrete requirement justifies it. The initial app is frontend-only.
 Bun conventions
 - Use bun for package installation, scripts, and running project tooling.
@@ -59,18 +59,31 @@ src/
 │   ├── components/
 │   │   ├── layout/
 │   │   ├── color/
+│   │   ├── scheme/
+│   │   ├── converter/
+│   │   ├── contrast/
+│   │   ├── palette/
+│   │   ├── collection/
+│   │   ├── export/
+│   │   ├── workspace/
 │   │   └── ui/
-│   │   ├── services/
-│   │   │   └── color-api.ts
-│     ├── utils/
-│     │   └── color-utils.ts
-│     ├── types/
-│     └── stores/               # Add only if shared state warrants it
-├── routes/                      # If using SvelteKit; otherwise follow Vite Svelte setup
-├── App.svelte                   # If using plain Svelte + Vite
+│   ├── services/
+│   │   ├── color-api.ts
+│   │   ├── palette-service.ts
+│   │   ├── storage-service.ts
+│   │   └── export/
+│   ├── utils/
+│   │   ├── color-utils.ts
+│   │   ├── contrast-utils.ts
+│   │   ├── filename-utils.ts
+│   │   ├── export-utils.ts
+│   │   ├── theme.ts
+│   │   └── clipboard.ts
+│   ├── types/
+│   └── stores/
+├── App.svelte
 └── main.ts
 Architecture notes:
-- Confirm whether the project is Svelte + Vite or SvelteKit before implementing routing. Do not introduce SvelteKit without user approval.
 - Keep The Color API client in a dedicated service module.
 - Put reusable color math, validation, and formatting in utilities.
 - Keep feature-specific logic close to the feature.
@@ -118,7 +131,7 @@ Components and interaction
 - Provide keyboard navigation and visible focus states.
 - Ensure text placed on swatches meets contrast requirements.
 - Responsive behavior must be intentional on mobile, tablet, and desktop.
-- Space may generate a palette when that feature exists; ignore the shortcut while focus is in an input, textarea, select, or editable element.
+- Space may generate a palette when that feature exists; ignore the shortcut while focus is in an input, textarea, select, or editable element, or when a modal dialog is open.
 - Do not rely on color alone to communicate statuses.
 8. Code Style
 - Use idiomatic Svelte components and TypeScript.
@@ -140,7 +153,6 @@ For each phase:
 6. Report exactly which commands ran and their results.
 Use Bun commands, for example (only if corresponding scripts exist):
 bun run check
-bun run lint
 bun run test
 bun run build
 Do not claim tests passed if they were not executed. Report environment limitations and command failures accurately.
@@ -152,12 +164,12 @@ Do not claim tests passed if they were not executed. Report environment limitati
 - Keep changes focused.
 - Do not modify secrets, .env files, or deployment settings unnecessarily.
 11. Docker Guidelines
-- Maintain a production-oriented, multi-stage Dockerfile when Docker is in scope (planned Phase 8).
-- Use a Bun image for dependency installation and build stages.
-- Use a small, appropriate web server image (e.g. Nginx) to serve the compiled static Vite output in production, unless the user requests a Bun runtime server.
+- Maintain a production-oriented, multi-stage Dockerfile when Docker is in scope (Phase 8).
+- Use a Bun image for dependency installation and build stages (`oven/bun:1.2-alpine`).
+- Use a small, unprivileged web server image (`nginxinc/nginx-unprivileged:1.27-alpine`) to serve the compiled static Vite output in production.
 - Use .dockerignore to exclude .git, node_modules, build output, local environment files, and other unnecessary files.
 - Do not bake secrets into image layers or frontend build arguments.
-- Run containers as a non-root user where practical for the chosen runtime image.
+- Run containers as a non-root user (e.g. UID 101 `nginx`).
 - Document the build and run commands in README when Docker is implemented.
 - Do not run Docker or Podman commands unless the user explicitly asks.
 12. Explicit Restrictions

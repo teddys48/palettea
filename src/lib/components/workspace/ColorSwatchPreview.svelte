@@ -78,7 +78,7 @@
 
             <span
               class="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity p-1 rounded backdrop-blur-sm {swatch.isLight ? 'bg-black/10 text-neutral-900' : 'bg-white/20 text-white'}"
-              title="Inspect in Phase 2 Color Inspector"
+              title="Inspect in Color Inspector"
             >
               <Pipette class="w-3.5 h-3.5" aria-hidden="true" />
             </span>
@@ -129,10 +129,10 @@
   <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-muted-foreground pt-2">
     <div class="flex items-center gap-1.5">
       <Sparkles class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
-      <span>Curated preview palette. Dynamic scheme generation activates in Phase 3.</span>
+      <span>Curated aesthetic preset palette. Click any color to inspect, convert, or verify contrast.</span>
     </div>
     <span class="text-[11px] bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">
-      Click to Inspect in Phase 2 Inspector
+      Click to Inspect in Color Inspector
     </span>
   </div>
 </div>
