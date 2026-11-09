@@ -116,6 +116,7 @@
             type="color"
             value={nativePickerValue}
             oninput={handleNativePickerChange}
+            onchange={handleNativePickerChange}
             class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
             title="Open native color picker"
           />

@@ -309,7 +309,7 @@
     </div>
 
     <ColorConverter
-      initialHex={activeConverterHex}
+      bind:initialHex={activeConverterHex}
       oninspectColor={handleInspectColorFromConverter}
     />
   </div>
@@ -355,7 +355,7 @@
     </div>
 
     <ColorInspector
-      initialHex={activeInspectHex}
+      bind:initialHex={activeInspectHex}
       onsavePalette={handleSaveFromInspector}
     />
   </div>

@@ -115,6 +115,7 @@
         type="color"
         value={pickerHex}
         oninput={handlePickerInput}
+        onchange={handlePickerInput}
         class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10"
         title="Open native color picker"
       />

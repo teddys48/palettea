@@ -155,6 +155,7 @@
               id="fg-color-picker"
               value={fgPickerValue}
               oninput={handleFgPickerChange}
+              onchange={handleFgPickerChange}
               aria-label="Foreground color eyedropper"
               class="absolute -inset-2 w-16 h-16 cursor-pointer opacity-0 z-10"
             />
@@ -210,6 +211,7 @@
               id="bg-color-picker"
               value={bgPickerValue}
               oninput={handleBgPickerChange}
+              onchange={handleBgPickerChange}
               aria-label="Background color eyedropper"
               class="absolute -inset-2 w-16 h-16 cursor-pointer opacity-0 z-10"
             />

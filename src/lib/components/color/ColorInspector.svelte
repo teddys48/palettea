@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import AlertTriangle from 'lucide-svelte/icons/alert-triangle';
   import RefreshCw from 'lucide-svelte/icons/refresh-cw';
   import ColorInput from './ColorInput.svelte';
@@ -14,9 +14,11 @@
     onsavePalette?: (color: { hex: string; name?: string }) => void;
   }
 
-  let { initialHex = '4F46E5', onsavePalette }: Props = $props();
+  let { initialHex = $bindable('4F46E5'), onsavePalette }: Props = $props();
 
-  let activeCleanHex = $state('4F46E5');
+  const initialClean = normalizeHex(initialHex) || '4F46E5';
+  let activeCleanHex = $state(initialClean);
+  let previousPropHex = initialClean;
   let status = $state<ColorRequestStatus>('idle');
   let errorMessage = $state<string | null>(null);
   let colorData = $state<ColorApiResponse | null>(null);
@@ -38,6 +40,8 @@
     activeAbortController = new AbortController();
 
     activeCleanHex = valid;
+    previousPropHex = valid;
+    initialHex = valid;
     status = 'loading';
     errorMessage = null;
 
@@ -76,11 +80,15 @@
   }
 
   $effect(() => {
-    const normalizedProp = normalizeHex(initialHex);
+    const currentProp = initialHex;
+    const normalizedProp = normalizeHex(currentProp);
     if (normalizedProp) {
-      if (!isInitialized || normalizedProp !== activeCleanHex) {
+      if (!isInitialized || normalizedProp !== previousPropHex) {
         isInitialized = true;
-        loadColor(normalizedProp);
+        previousPropHex = normalizedProp;
+        untrack(() => {
+          loadColor(normalizedProp);
+        });
       }
     }
   });
@@ -119,50 +127,44 @@
       role="alert"
       class="rounded-2xl border-2 border-red-500/50 bg-red-50 dark:bg-red-950/30 p-6 text-center space-y-4 shadow-neo"
     >
-      <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400">
+      <div class="w-12 h-12 mx-auto rounded-full bg-red-100 dark:bg-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400">
         <AlertTriangle class="w-6 h-6" aria-hidden="true" />
       </div>
-
-      <div class="space-y-1 max-w-md mx-auto">
+      <div>
         <h3 class="text-base font-bold text-red-900 dark:text-red-200">
-          Color Inspection Failed
+          Color Inspection Error
         </h3>
-        <p class="text-xs sm:text-sm text-red-700 dark:text-red-300 font-mono">
-          {errorMessage ?? 'Could not fetch color details from The Color API.'}
+        <p class="text-xs text-red-700 dark:text-red-300 mt-1 max-w-md mx-auto">
+          {errorMessage || 'Unable to retrieve color data from API.'}
         </p>
       </div>
-
-      <div class="flex items-center justify-center gap-3 pt-2">
+      <div>
         <button
           type="button"
           onclick={handleRetry}
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 text-white font-medium text-xs font-mono shadow-neo hover:bg-red-700 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-red-600 hover:bg-red-700 text-white shadow-neo cursor-pointer transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
         >
           <RefreshCw class="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Retry Inspection</span>
-        </button>
-
-        <button
-          type="button"
-          onclick={() => handleColorChange('4F46E5')}
-          class="px-4 py-2 rounded-xl border border-red-300 dark:border-red-800 bg-surface text-foreground font-medium text-xs font-mono shadow-sm hover:bg-surface-hover cursor-pointer"
-        >
-          Reset to Default
+          <span>Retry Color Inspection</span>
         </button>
       </div>
     </div>
-  {:else}
-    <!-- Color Preview & Format Breakdown -->
-    <div class="space-y-6 animate-in fade-in duration-200">
-      <ColorPreview
-        hex={activeCleanHex}
-        {colorData}
-        onsave={onsavePalette}
-      />
+  {:else if colorData}
+    <!-- Main Two-Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <!-- Left Column: Visual Swatch & Details (5 cols on lg) -->
+      <div class="lg:col-span-5">
+        <ColorPreview
+          hex={activeCleanHex}
+          {colorData}
+          onsave={onsavePalette}
+        />
+      </div>
 
-      {#if colorData}
+      <!-- Right Column: 6 Color Format Blocks (7 cols on lg) -->
+      <div class="lg:col-span-7">
         <ColorFormats {colorData} />
-      {/if}
+      </div>
     </div>
   {/if}
 </div>

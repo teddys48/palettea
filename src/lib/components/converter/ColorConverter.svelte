@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from 'svelte';
   import Sparkles from 'lucide-svelte/icons/sparkles';
   import Search from 'lucide-svelte/icons/search';
   import ColorFormatInput from './ColorFormatInput.svelte';
@@ -19,7 +20,7 @@
     oninspectColor?: (cleanHex: string) => void;
   }
 
-  let { initialHex = '7C83FD', oninspectColor }: Props = $props();
+  let { initialHex = $bindable('7C83FD'), oninspectColor }: Props = $props();
 
   const DEFAULT_HEX = '7C83FD';
 
@@ -32,13 +33,19 @@
     return convertAllFormats({ r: 124, g: 131, b: 253 });
   }
 
+  const initialClean = normalizeHex(initialHex) || DEFAULT_HEX;
+  const initialResult = initColor(initialClean);
+
   // State management
   let activeFormat = $state<SupportedColorFormat>('hex');
-  let activeInputText = $state('#7C83FD');
-  let lastValidResult = $state<ConvertedColorResult>(initColor(DEFAULT_HEX));
+  let lastValidResult = $state<ConvertedColorResult>(initialResult);
+  let activeInputText = $state(initialResult.hex.value);
 
   let isInputValid = $state(true);
   let validationErrorMessage = $state<string | null>(null);
+
+  // Track the last processed prop hex to prevent effect loops and self-overwriting
+  let previousPropHex = initialClean;
 
   // Contrast foreground for preview swatch
   const previewTextColor = $derived(getContrastColor(lastValidResult.hex.value));
@@ -69,6 +76,15 @@
     }
   }
 
+  function applyColorResult(result: ConvertedColorResult) {
+    lastValidResult = result;
+    activeInputText = getFormatValue(result, activeFormat);
+    isInputValid = true;
+    validationErrorMessage = null;
+    previousPropHex = result.hex.raw;
+    initialHex = result.hex.raw;
+  }
+
   // Handle user typing into input
   function handleInputChange(newText: string) {
     activeInputText = newText;
@@ -78,6 +94,8 @@
       lastValidResult = conversion.data;
       isInputValid = true;
       validationErrorMessage = null;
+      previousPropHex = conversion.data.hex.raw;
+      initialHex = conversion.data.hex.raw;
     } else {
       isInputValid = false;
       validationErrorMessage = conversion.error;
@@ -98,10 +116,7 @@
     if (clean) {
       const conversion = convertColorInput('hex', clean);
       if (conversion.success) {
-        lastValidResult = conversion.data;
-        activeInputText = getFormatValue(conversion.data, activeFormat);
-        isInputValid = true;
-        validationErrorMessage = null;
+        applyColorResult(conversion.data);
       }
     }
   }
@@ -110,10 +125,7 @@
   function handlePresetClick(cleanHex: string) {
     const conversion = convertColorInput('hex', cleanHex);
     if (conversion.success) {
-      lastValidResult = conversion.data;
-      activeInputText = getFormatValue(conversion.data, activeFormat);
-      isInputValid = true;
-      validationErrorMessage = null;
+      applyColorResult(conversion.data);
     }
   }
 
@@ -121,11 +133,8 @@
   function handleReset() {
     const conversion = convertColorInput('hex', DEFAULT_HEX);
     if (conversion.success) {
-      lastValidResult = conversion.data;
       activeFormat = 'hex';
-      activeInputText = '#7C83FD';
-      isInputValid = true;
-      validationErrorMessage = null;
+      applyColorResult(conversion.data);
     }
   }
 
@@ -137,15 +146,16 @@
 
   // React to initialHex change if passed from parent
   $effect(() => {
-    const clean = normalizeHex(initialHex);
-    if (clean && clean !== lastValidResult.hex.raw) {
-      const conversion = convertColorInput('hex', clean);
-      if (conversion.success) {
-        lastValidResult = conversion.data;
-        activeInputText = getFormatValue(conversion.data, activeFormat);
-        isInputValid = true;
-        validationErrorMessage = null;
-      }
+    const currentProp = initialHex;
+    const cleanProp = normalizeHex(currentProp);
+    if (cleanProp && cleanProp !== previousPropHex) {
+      previousPropHex = cleanProp;
+      untrack(() => {
+        const conversion = convertColorInput('hex', cleanProp);
+        if (conversion.success) {
+          applyColorResult(conversion.data);
+        }
+      });
     }
   });
 </script>
