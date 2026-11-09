@@ -30,3 +30,4 @@ export * from './scheme';
 export * from './contrast';
 export * from './palette';
 export * from './collection';
+export * from './export';

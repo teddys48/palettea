@@ -7,8 +7,10 @@
   import ArrowRightLeft from 'lucide-svelte/icons/arrow-right-left';
   import Eye from 'lucide-svelte/icons/eye';
   import Layers from 'lucide-svelte/icons/layers';
+  import Download from 'lucide-svelte/icons/download';
   import Button from '../ui/Button.svelte';
   import Badge from '../ui/Badge.svelte';
+  import ExportWorkspace from '../export/ExportWorkspace.svelte';
   import ColorInspector from '../color/ColorInspector.svelte';
   import SchemeGenerator from '../scheme/SchemeGenerator.svelte';
   import ColorConverter from '../converter/ColorConverter.svelte';
@@ -23,7 +25,7 @@
     onselectSection?: (id: string) => void;
   }
 
-  let { activeNav = 'collections', onselectSection }: Props = $props();
+  let { activeNav = 'export', onselectSection }: Props = $props();
 
   const previewPalettes: PreviewPalette[] = [
     {
@@ -73,6 +75,13 @@
   let activeConverterHex = $state('7C83FD');
   let activeContrastFg = $state('#191919');
   let activeContrastBg = $state('#FFFFFF');
+  let currentSchemeColors = $state<Array<{ hex: string; name?: string }>>([
+    { hex: '#4F46E5', name: 'Electric Iris' },
+    { hex: '#818CF8', name: 'Soft Indigo' },
+    { hex: '#C7D2FE', name: 'Lavender Mist' },
+    { hex: '#F43F5E', name: 'Coral Rose' },
+    { hex: '#10B981', name: 'Emerald Spark' },
+  ]);
 
   // External save palette dialog trigger
   let isSavePaletteOpen = $state(false);
@@ -185,7 +194,7 @@
       <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
-      <span class="text-xs font-mono text-foreground font-semibold">Phase 6 Active</span>
+      <span class="text-xs font-mono text-foreground font-semibold">Phase 7 Active</span>
     </div>
 
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
@@ -193,11 +202,23 @@
     </h1>
 
     <p class="text-base sm:text-lg text-muted-foreground leading-relaxed">
-      A modern color toolkit to organize palette collections, evaluate WCAG 2.2 contrast ratios, convert formats in real-time, generate harmonic schemes, and inspect color properties.
+      A modern color toolkit to export developer-ready CSS variables, Tailwind configurations, JSON palettes, and vector SVG previews with zero backend dependency.
     </p>
 
     <!-- Quick Tool Switcher Pills -->
     <div class="pt-2 flex flex-wrap items-center justify-center gap-2">
+      <button
+        type="button"
+        onclick={() => scrollToSection('export')}
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {activeNav === 'export' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
+      >
+        <Download class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+        <span>Export & Dev Tools</span>
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+          Phase 7
+        </span>
+      </button>
+
       <button
         type="button"
         onclick={() => scrollToSection('collections')}
@@ -205,7 +226,7 @@
       >
         <Layers class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Palettes & Collections</span>
-        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-accent/15 text-accent font-bold">
+        <span class="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground">
           Phase 6
         </span>
       </button>
@@ -260,8 +281,30 @@
     </div>
   </div>
 
-  <!-- Primary Feature: Palette Management & Collections (Phase 6) -->
-  <div id="collections-section" class="scroll-mt-24 space-y-3">
+  <!-- Primary Feature: Export & Developer Tools (Phase 7) -->
+  <div id="export-section" class="scroll-mt-24 space-y-3">
+    <ExportWorkspace
+      schemeColors={currentSchemeColors}
+      inspectorHex={activeInspectHex}
+    />
+  </div>
+
+  <!-- Secondary Feature: Palette Management & Collections (Phase 6) -->
+  <div id="collections-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
+    <div class="flex items-center justify-between border-b border-border pb-2">
+      <div>
+        <h2 class="text-lg font-bold text-foreground flex items-center gap-2">
+          <Layers class="w-5 h-5 text-accent" aria-hidden="true" />
+          <span>Palettes & Collections Management</span>
+        </h2>
+        <p class="text-xs text-muted-foreground mt-0.5">
+          Organize saved palettes, create collections, search, filter, and modify color order.
+        </p>
+      </div>
+
+      <Badge variant="neutral" size="sm">Phase 6</Badge>
+    </div>
+
     <PaletteManager
       oninspectColor={handleInspectColorFromPalette}
       oncontrastColor={handleContrastColorFromPalette}
@@ -269,7 +312,7 @@
     />
   </div>
 
-  <!-- Secondary Feature: Contrast & Accessibility Checker (Phase 5) -->
+  <!-- Tertiary Feature: Contrast & Accessibility Checker (Phase 5) -->
   <div id="contrast-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -292,7 +335,7 @@
     />
   </div>
 
-  <!-- Tertiary Feature: Color Converter (Phase 4) -->
+  <!-- Quaternary Feature: Color Converter (Phase 4) -->
   <div id="converter-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -314,7 +357,7 @@
     />
   </div>
 
-  <!-- Quaternary Feature: Color Scheme Generator (Phase 3) -->
+  <!-- Quinary Feature: Color Scheme Generator (Phase 3) -->
   <div id="generator-section" class="scroll-mt-24 pt-8 border-t border-border space-y-3">
     <div class="flex items-center justify-between border-b border-border pb-2">
       <div>
@@ -335,10 +378,11 @@
       inspectorHex={activeInspectHex}
       oninspectColor={handleInspectColorFromScheme}
       onsavePalette={handleSaveFromScheme}
+      oncolorsChange={(colors) => (currentSchemeColors = colors)}
     />
   </div>
 
-  <!-- Quinary Feature: Color Picker & Inspector (Phase 2) -->
+  <!-- Senary Feature: Color Picker & Inspector (Phase 2) -->
   <div id="inspector-section" class="scroll-mt-24 pt-8 border-t border-border space-y-4">
     <div id="color-inspector-section" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-2">
       <div>
@@ -395,7 +439,6 @@
           aria-label="Switch curated palette preset"
         >
           <RefreshCw class="w-3.5 h-3.5" aria-hidden="true" />
-          <span class="hidden sm:inline">Next Preset</span>
         </Button>
       </div>
     </div>
@@ -409,7 +452,7 @@
   </div>
 
   <!-- Roadmap Context Cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 pt-6 border-t border-border">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4 pt-6 border-t border-border">
     <!-- Card 1: Phase 1 Complete -->
     <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
@@ -500,16 +543,34 @@
       </div>
     </div>
 
-    <!-- Card 6: Phase 6 Active -->
-    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+    <!-- Card 6: Phase 6 Complete -->
+    <div class="rounded-xl border border-border bg-surface p-4 shadow-sm flex flex-col justify-between">
       <div>
         <div class="flex items-center justify-between mb-2">
-          <Badge variant="accent">Phase 6 Active</Badge>
-          <span class="text-xs font-mono text-muted-foreground">Palettes</span>
+          <Badge variant="neutral">Completed</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Phase 6</span>
         </div>
         <h3 class="text-sm font-bold text-foreground mb-1">Palette Management</h3>
         <p class="text-xs text-muted-foreground leading-relaxed">
           LocalStorage persistence, collections grouping, search, sorting, full palette CRUD, and feature integration.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+        <Check class="w-3.5 h-3.5" aria-hidden="true" />
+        <span>Verified with tests</span>
+      </div>
+    </div>
+
+    <!-- Card 7: Phase 7 Active -->
+    <div class="rounded-xl border-2 border-indigo-500/80 dark:border-indigo-500 bg-surface p-4 shadow-neo flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <Badge variant="accent">Phase 7 Active</Badge>
+          <span class="text-xs font-mono text-muted-foreground">Export</span>
+        </div>
+        <h3 class="text-sm font-bold text-foreground mb-1">Export & Dev Tools</h3>
+        <p class="text-xs text-muted-foreground leading-relaxed">
+          Local zero-backend export for CSS variables, Tailwind v4 & v3, JSON, vector SVG, and semantic token tools.
         </p>
       </div>
       <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">

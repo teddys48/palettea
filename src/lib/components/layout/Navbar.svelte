@@ -18,6 +18,7 @@
   let isMobileMenuOpen = $state(false);
 
   const navItems: NavItem[] = [
+    { id: 'export', label: 'Export & Dev Tools', href: '#export' },
     { id: 'collections', label: 'Palettes & Collections', href: '#collections' },
     { id: 'contrast', label: 'Contrast Checker', href: '#contrast' },
     { id: 'converter', label: 'Color Converter', href: '#converter' },
@@ -53,7 +54,7 @@
           <span class="text-[10px] uppercase font-mono tracking-wider text-muted-foreground -mt-1">Color Toolkit</span>
         </div>
       </a>
-      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 6</Badge>
+      <Badge variant="accent" size="sm" class="hidden sm:inline-flex">Phase 7</Badge>
     </div>
 
     <!-- Desktop Navigation -->

@@ -13,6 +13,7 @@
     inspectorHex?: string;
     oninspectColor?: (cleanHex: string) => void;
     onsavePalette?: (colors: Array<{ hex: string; name?: string }>, title?: string) => void;
+    oncolorsChange?: (colors: Array<{ hex: string; name?: string }>) => void;
   }
 
   let {
@@ -20,6 +21,7 @@
     inspectorHex,
     oninspectColor,
     onsavePalette,
+    oncolorsChange,
   }: Props = $props();
 
   let baseHex = $state('4F46E5');
@@ -56,6 +58,9 @@
       const data = await fetchColorScheme(valid, targetMode, targetCount, activeAbortController.signal);
       schemeData = data;
       status = 'success';
+      if (oncolorsChange && data.colors) {
+        oncolorsChange(data.colors.map((c) => ({ hex: c.hex.value, name: c.name?.value })));
+      }
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') {
         return;
