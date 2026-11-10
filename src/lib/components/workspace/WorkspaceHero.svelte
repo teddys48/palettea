@@ -191,7 +191,7 @@
   <!-- Top Hero Header -->
   <div class="text-center max-w-3xl mx-auto space-y-4">
     <div class="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 shadow-sm">
-      <span class="flex h-2 w-2 rounded-full bg-accent animate-ping" aria-hidden="true"></span>
+      <span class="flex h-2 w-2 rounded-full bg-accent" aria-hidden="true"></span>
       <span class="text-xs font-mono text-muted-foreground">Explore colors. Build harmony.</span>
       <span class="text-xs font-mono text-muted-foreground">•</span>
       <span class="text-xs font-mono text-foreground font-semibold">Studio Edition</span>
@@ -446,7 +446,7 @@
           Generate balanced palettes using classical color theory including complementary, analogous, triadic, and monochromatic schemes.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-xs font-mono text-accent font-medium">
         <Sparkles class="w-3.5 h-3.5" aria-hidden="true" />
         <span>Instant Harmonies</span>
       </div>
@@ -463,7 +463,7 @@
           Verify contrast compliance with WCAG 2.2 AA and AAA standards with live text previews and automated contrast improvements.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-xs font-mono text-accent font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
         <span>WCAG 2.2 Verified</span>
       </div>
@@ -480,7 +480,7 @@
           Convert color values seamlessly between HEX, RGB, HSL, HSV, CMYK, and CSS formats with instant copy support.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-xs font-mono text-accent font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
         <span>Multi-format Ready</span>
       </div>
@@ -497,7 +497,7 @@
           Export production-ready tokens and stylesheets for Tailwind CSS, CSS Custom Properties, JSON design tokens, and vector SVGs.
         </p>
       </div>
-      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] font-mono text-accent font-medium">
+      <div class="mt-4 pt-3 border-t border-border flex items-center gap-1.5 text-xs font-mono text-accent font-medium">
         <Check class="w-3.5 h-3.5" aria-hidden="true" />
         <span>Tailwind & CSS Tokens</span>
       </div>

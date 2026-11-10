@@ -8,8 +8,8 @@
     --surface: #FFFFFF;
     --surface-hover: #F4F3EE;
     --foreground: #18181B;
-    --muted: #64748B;
-    --muted-foreground: #52525B;
+    --muted: #52525B;
+    --muted-foreground: #3F3F46;
     --border: #E4E4E7;
     --border-strong: #18181B;
     --accent: #4F46E5;
@@ -25,8 +25,8 @@
     --surface: #18181B;
     --surface-hover: #222226;
     --foreground: #F4F4F5;
-    --muted: #71717A;
-    --muted-foreground: #A1A1AA;
+    --muted: #A1A1AA;
+    --muted-foreground: #D4D4D8;
     --border: #2C2C32;
     --border-strong: #3F3F46;
     --accent: #6366F1;
@@ -42,6 +42,19 @@
     color: var(--foreground);
     font-family: var(--font-sans);
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+
+  ::placeholder {
+    color: var(--muted);
+    opacity: 1;
   }
 }
 
@@ -68,9 +81,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
-    animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.05s !important;
+  }
+
+  .animate-spin,
+  .animate-ping,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
   }
 }

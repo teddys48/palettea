@@ -66,7 +66,7 @@
 
         {#if colorData}
           <span
-            class="text-[11px] font-mono px-2.5 py-0.5 rounded-full border backdrop-blur-md"
+            class="text-xs font-mono px-2.5 py-0.5 rounded-full border backdrop-blur-md"
             style="background-color: {isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.1)'}; border-color: {isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.2)'};"
           >
             {isExactMatch ? 'Exact Name' : 'Approximate Name'}

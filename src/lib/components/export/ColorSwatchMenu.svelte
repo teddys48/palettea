@@ -85,7 +85,7 @@
       }}
       class="absolute right-0 top-full mt-1.5 z-50 w-56 rounded-xl border border-border bg-surface p-1.5 shadow-neo text-xs font-mono animate-in fade-in zoom-in-95 duration-100"
     >
-      <div class="px-2 py-1 text-[10px] uppercase font-bold text-muted-foreground border-b border-border/50 mb-1 flex items-center justify-between">
+      <div class="px-2 py-1 text-xs uppercase font-bold text-muted-foreground border-b border-border/50 mb-1 flex items-center justify-between">
         <span>{name || 'Color Code'}</span>
         <span class="w-3 h-3 rounded-full border border-border" style="background-color: {formattedHex};"></span>
       </div>
@@ -98,11 +98,11 @@
         class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-background transition-colors text-left text-foreground cursor-pointer"
       >
         <div class="flex flex-col truncate">
-          <span class="text-[10px] text-muted-foreground uppercase">HEX</span>
+          <span class="text-xs text-muted-foreground uppercase">HEX</span>
           <span class="font-semibold truncate">{formattedHex}</span>
         </div>
         {#if copiedFormat === 'hex'}
-          <span class="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+          <span class="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
             <Check class="w-3 h-3" aria-hidden="true" />
             <span>Copied</span>
           </span>
@@ -119,11 +119,11 @@
         class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-background transition-colors text-left text-foreground cursor-pointer"
       >
         <div class="flex flex-col truncate">
-          <span class="text-[10px] text-muted-foreground uppercase">RGB</span>
+          <span class="text-xs text-muted-foreground uppercase">RGB</span>
           <span class="font-semibold truncate">{rgbCss}</span>
         </div>
         {#if copiedFormat === 'rgb'}
-          <span class="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+          <span class="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
             <Check class="w-3 h-3" aria-hidden="true" />
             <span>Copied</span>
           </span>
@@ -140,11 +140,11 @@
         class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-background transition-colors text-left text-foreground cursor-pointer"
       >
         <div class="flex flex-col truncate">
-          <span class="text-[10px] text-muted-foreground uppercase">HSL</span>
+          <span class="text-xs text-muted-foreground uppercase">HSL</span>
           <span class="font-semibold truncate">{hslCss}</span>
         </div>
         {#if copiedFormat === 'hsl'}
-          <span class="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+          <span class="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
             <Check class="w-3 h-3" aria-hidden="true" />
             <span>Copied</span>
           </span>
@@ -161,11 +161,11 @@
         class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-background transition-colors text-left text-foreground cursor-pointer"
       >
         <div class="flex flex-col truncate">
-          <span class="text-[10px] text-muted-foreground uppercase">CSS Variable</span>
+          <span class="text-xs text-muted-foreground uppercase">CSS Variable</span>
           <span class="font-semibold truncate">{effectiveVarName}</span>
         </div>
         {#if copiedFormat === 'cssvar'}
-          <span class="inline-flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+          <span class="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
             <Check class="w-3 h-3" aria-hidden="true" />
             <span>Copied</span>
           </span>

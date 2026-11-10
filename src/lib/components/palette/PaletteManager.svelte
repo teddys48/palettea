@@ -135,7 +135,7 @@
       class="flex-shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-2 border {paletteStore.selectedFilter === 'all' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
     >
       <span>All Palettes</span>
-      <span class="text-[10px] px-1.5 py-0.2 rounded-full {paletteStore.selectedFilter === 'all' ? 'bg-foreground text-background' : 'bg-zinc-200 dark:bg-zinc-800 text-muted-foreground'}">
+      <span class="text-xs px-1.5 py-0.2 rounded-full {paletteStore.selectedFilter === 'all' ? 'bg-foreground text-background' : 'bg-zinc-200 dark:bg-zinc-800 text-muted-foreground'}">
         {paletteStore.collectionStats.total}
       </span>
     </button>
@@ -147,7 +147,7 @@
       class="flex-shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all cursor-pointer flex items-center gap-2 border {paletteStore.selectedFilter === 'unassigned' ? 'bg-surface border-border-strong text-foreground shadow-neo' : 'bg-background border-border text-muted-foreground hover:text-foreground hover:bg-surface'}"
     >
       <span>Unassigned</span>
-      <span class="text-[10px] px-1.5 py-0.2 rounded-full {paletteStore.selectedFilter === 'unassigned' ? 'bg-foreground text-background' : 'bg-zinc-200 dark:bg-zinc-800 text-muted-foreground'}">
+      <span class="text-xs px-1.5 py-0.2 rounded-full {paletteStore.selectedFilter === 'unassigned' ? 'bg-foreground text-background' : 'bg-zinc-200 dark:bg-zinc-800 text-muted-foreground'}">
         {paletteStore.collectionStats.unassigned}
       </span>
     </button>
@@ -162,7 +162,7 @@
       >
         <Folder class="w-3 h-3 text-accent" aria-hidden="true" />
         <span class="max-w-[120px] truncate">{col.name}</span>
-        <span class="text-[10px] px-1.5 py-0.2 rounded-full {paletteStore.selectedFilter === col.id ? 'bg-foreground text-background' : 'bg-zinc-200 dark:bg-zinc-800 text-muted-foreground'}">
+        <span class="text-xs px-1.5 py-0.2 rounded-full {paletteStore.selectedFilter === col.id ? 'bg-foreground text-background' : 'bg-zinc-200 dark:bg-zinc-800 text-muted-foreground'}">
           {count}
         </span>
       </button>
@@ -180,7 +180,7 @@
         type="text"
         bind:value={paletteStore.searchQuery}
         placeholder="Search by name, description, HEX code, color name..."
-        class="w-full pl-9 pr-8 py-1.5 rounded-xl border border-border bg-background text-xs sm:text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        class="w-full pl-9 pr-8 py-1.5 rounded-xl border border-border bg-background text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       />
       {#if paletteStore.searchQuery}
         <button

@@ -88,7 +88,7 @@
       </div>
 
       <div class="flex items-center gap-1.5 self-start sm:self-auto">
-        <span class="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded-md border border-border bg-background text-muted-foreground">
+        <span class="inline-flex items-center gap-1 text-xs font-mono px-2 py-0.5 rounded-md border border-border bg-background text-muted-foreground">
           Live sync
         </span>
       </div>

@@ -64,7 +64,7 @@
         <button
           type="button"
           onclick={() => oninspectColor?.(evaluation.foreground.replace(/^#/, ''))}
-          class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono border border-border bg-background hover:bg-surface text-foreground transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-mono border border-border bg-background hover:bg-surface text-foreground transition-colors cursor-pointer"
           title="Inspect foreground color in Color Inspector"
         >
           <span class="w-2.5 h-2.5 rounded-full border border-border" style="background-color: {evaluation.foreground};"></span>
@@ -74,7 +74,7 @@
         <button
           type="button"
           onclick={() => oninspectColor?.(evaluation.background.replace(/^#/, ''))}
-          class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono border border-border bg-background hover:bg-surface text-foreground transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-mono border border-border bg-background hover:bg-surface text-foreground transition-colors cursor-pointer"
           title="Inspect background color in Color Inspector"
         >
           <span class="w-2.5 h-2.5 rounded-full border border-border" style="background-color: {evaluation.background};"></span>
@@ -94,7 +94,7 @@
         <span>{statusConfig.label}</span>
       </div>
 
-      <span class="text-[11px] font-mono text-muted-foreground">
+      <span class="text-xs font-mono text-muted-foreground">
         {evaluation.passedCount} of {evaluation.totalCount} criteria satisfied
       </span>
     </div>
@@ -106,7 +106,7 @@
   </p>
 
   <!-- Large Text Definition Notice -->
-  <div class="rounded-xl border border-border/80 bg-background/50 p-3 flex items-start gap-2.5 text-xs text-muted-foreground">
+  <div class="rounded-xl bg-surface-hover/60 p-3 flex items-start gap-2.5 text-xs text-muted-foreground">
     <Info class="w-4 h-4 text-accent shrink-0 mt-0.5" aria-hidden="true" />
     <div class="space-y-0.5">
       <span class="font-bold text-foreground font-mono">Large Text Definition (WCAG):</span>
@@ -122,10 +122,10 @@
       Independent WCAG 2.2 Criteria Evaluation
     </h4>
 
-    <div class="grid grid-cols-1 gap-2.5" role="list">
+    <div class="divide-y divide-border border-y border-border" role="list">
       {#each evaluation.criteria as criterion (criterion.id)}
         <div
-          class="flex items-center justify-between p-3 rounded-xl border transition-colors {criterion.passed ? 'border-border bg-background/40' : 'border-rose-200 dark:border-rose-950/60 bg-rose-50/30 dark:bg-rose-950/20'}"
+          class="flex items-center justify-between py-3 px-1 transition-colors {criterion.passed ? 'bg-transparent' : 'bg-rose-50/20 dark:bg-rose-950/20'}"
           role="listitem"
         >
           <div class="space-y-0.5 pr-2">
@@ -133,11 +133,11 @@
               <span class="text-xs sm:text-sm font-bold text-foreground">
                 {criterion.name}
               </span>
-              <span class="text-[10px] font-mono px-1.5 py-0.2 rounded border border-border bg-surface text-muted-foreground">
+              <span class="text-xs font-mono px-1.5 py-0.2 rounded border border-border bg-surface text-muted-foreground">
                 Min {criterion.minRatio}:1
               </span>
             </div>
-            <p class="text-[11px] text-muted-foreground leading-normal">
+            <p class="text-xs text-muted-foreground leading-normal">
               {criterion.description}
             </p>
           </div>

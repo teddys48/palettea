@@ -71,7 +71,7 @@
     <div class="flex items-center gap-1.5">
       {#if isSeed}
         <span
-          class="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded-md backdrop-blur-md shadow-sm {isLight ? 'bg-black/10 text-black border border-black/20' : 'bg-white/20 text-white border border-white/30'}"
+          class="inline-flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 rounded-md backdrop-blur-md shadow-sm {isLight ? 'bg-black/10 text-black border border-black/20' : 'bg-white/20 text-white border border-white/30'}"
           title="Base seed color used to generate this harmony"
         >
           <Sparkles class="w-3 h-3" aria-hidden="true" />
@@ -79,7 +79,7 @@
         </span>
       {:else}
         <span
-          class="text-xs font-mono font-semibold opacity-70 px-1.5 py-0.5 rounded"
+          class="text-xs font-mono font-bold opacity-95 px-1.5 py-0.5 rounded"
           aria-hidden="true"
         >
           #{index + 1}
@@ -148,7 +148,7 @@
     </p>
 
     {#if rgbValue}
-      <p class="text-[11px] font-mono opacity-70 truncate">
+      <p class="text-xs font-mono opacity-90 truncate">
         {rgbValue}
       </p>
     {/if}

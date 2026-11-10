@@ -104,7 +104,7 @@
           <Pipette class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
           <span>Base Color</span>
         </label>
-        <span class="text-[11px] font-mono text-muted-foreground">• Seed</span>
+        <span class="text-xs font-mono text-muted-foreground">• Seed</span>
       </div>
 
       <form onsubmit={handleHexSubmit} class="flex items-center gap-2.5">
@@ -189,7 +189,7 @@
       >
         <Shuffle class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Random Color</span>
-        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-muted-foreground">
+        <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xs font-mono rounded bg-surface-hover border border-border text-muted-foreground">
           Space
         </kbd>
       </button>
@@ -231,11 +231,11 @@
         >
           <div class="w-full flex items-center justify-between gap-1">
             <span class="text-xs font-mono">{modeItem.shortLabel}</span>
-            <span class="text-[10px] font-mono px-1 py-0.2 rounded border border-border bg-surface text-muted-foreground">
+            <span class="text-xs font-mono px-1 py-0.2 rounded border border-border bg-surface text-muted-foreground">
               {modeItem.angle}
             </span>
           </div>
-          <span class="text-[10px] font-mono text-muted-foreground mt-1 line-clamp-1 opacity-80">
+          <span class="text-xs font-mono text-muted-foreground mt-1 line-clamp-1 opacity-85">
             {modeItem.label}
           </span>
         </button>

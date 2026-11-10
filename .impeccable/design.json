@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T09:32:45Z",
+  "title": "Design System: Palettea",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Electric Iris",
+        "canonical": "#4F46E5",
+        "tonalRamp": ["#312E81", "#3730A3", "#4338CA", "#4F46E5", "#6366F1", "#818CF8", "#A5B4FC", "#EEF2FF"]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Warm Alabaster",
+        "canonical": "#FAF9F6",
+        "tonalRamp": ["#18181B", "#27272A", "#71717A", "#A1A1AA", "#D4D4D8", "#E4E4E7", "#F4F4F5", "#FAF9F6"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Pure Surface",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#18181B", "#27272A", "#52525B", "#71717A", "#A1A1AA", "#D4D4D8", "#F4F3EE", "#FFFFFF"]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Zinc Ink",
+        "canonical": "#18181B",
+        "tonalRamp": ["#09090B", "#18181B", "#27272A", "#3F3F46", "#52525B", "#71717A", "#A1A1AA", "#F4F4F5"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border Mist",
+        "canonical": "#E4E4E7",
+        "tonalRamp": ["#27272A", "#3F3F46", "#52525B", "#71717A", "#A1A1AA", "#D4D4D8", "#E4E4E7", "#F4F4F5"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero titles and prominent workspace headers." },
+      "headline": { "displayName": "Headline", "purpose": "Tool section headers and modal titles." },
+      "title": { "displayName": "Title", "purpose": "Card headers and sub-headings." },
+      "body": { "displayName": "Body", "purpose": "Instructions, descriptions, and standard text." },
+      "label": { "displayName": "Label", "purpose": "Color values, hex codes, ratios, and tags." }
+    },
+    "shadows": [
+      { "name": "neo", "value": "2px 2px 0px #18181B", "purpose": "Default tactile neobrutalist block shadow on buttons and swatches." },
+      { "name": "neo-lg", "value": "3px 3px 0px #18181B", "purpose": "Elevated modal dialogs and active dropdown menus." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for tactile button presses and transitions." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary high-contrast button with tactile block shadow and physical press response.",
+      "html": "<button class=\"ds-btn-primary\">Generate Palette</button>",
+      "css": ".ds-btn-primary { background: #4F46E5; color: #FFFFFF; font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; padding: 8px 16px; border: 1px solid #18181B; border-radius: 8px; box-shadow: 2px 2px 0px #18181B; cursor: pointer; transition: transform 0.15s ease, background-color 0.15s ease; } .ds-btn-primary:hover { background: #4338CA; transform: translate(-1px, -1px); } .ds-btn-primary:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px #18181B; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Clean neutral surface button for secondary actions.",
+      "html": "<button class=\"ds-btn-secondary\">Export Code</button>",
+      "css": ".ds-btn-secondary { background: #FFFFFF; color: #18181B; font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 500; padding: 8px 16px; border: 1px solid #E4E4E7; border-radius: 8px; box-shadow: 2px 2px 0px #18181B; cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; } .ds-btn-secondary:hover { border-color: #18181B; transform: translate(-1px, -1px); } .ds-btn-secondary:active { transform: translate(1px, 1px); }"
+    },
+    {
+      "name": "Metadata Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Compact monospace tag for format names, color codes, and ratings.",
+      "html": "<span class=\"ds-badge\">HEX #4F46E5</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; background: #FAF9F6; color: #18181B; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; padding: 2px 8px; border: 1px solid #E4E4E7; border-radius: 9999px; }"
+    },
+    {
+      "name": "Tool Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Structural white surface card container with crisp neutral borders.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">Color Harmony</h3><p class=\"ds-card-desc\">Algorithmic color wheel schemes.</p></div>",
+      "css": ".ds-card { background: #FFFFFF; border: 1px solid #E4E4E7; border-radius: 12px; padding: 20px; font-family: 'Geist', sans-serif; } .ds-card-title { font-size: 16px; font-weight: 600; color: #18181B; margin: 0 0 6px 0; } .ds-card-desc { font-size: 14px; color: #64748B; margin: 0; }"
+    },
+    {
+      "name": "Color Input Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Validated hex input field with focused accent ring.",
+      "html": "<input type=\"text\" class=\"ds-input\" value=\"#4F46E5\" />",
+      "css": ".ds-input { background: #FFFFFF; color: #18181B; font-family: 'JetBrains Mono', monospace; font-size: 14px; padding: 8px 12px; border: 1px solid #E4E4E7; border-radius: 8px; outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease; } .ds-input:focus { border-color: #4F46E5; box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.35); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Tactile Color Laboratory",
+    "overview": "Palettea blends modern minimalist utility (80%) with restrained soft neobrutalist tactile accents (20%). It treats color not as decorative wallpaper, but as living experimental material. Surfaces remain quiet, neutral, and unembellished so that active palettes and swatches command the visitor's focus without competing interface noise.\n\nTactile confidence manifests through crisp 1px borders, subtle solid 2px offset drop shadows (2px 2px 0px #18181B), and physical click depressions.",
+    "keyCharacteristics": [
+      "Neutral Canvas, Vivid Content: Clean warm white (#FAF9F6) and deep slate (#18181B) backdrops let swatches lead.",
+      "Tactile Feedback: 2px offset block shadows on buttons and cards that depress by 1px on click.",
+      "Strict Monospace Data: Code values (HEX, RGB, HSL, ratios) always render in JetBrains Mono for instant scanning.",
+      "WCAG 2.2 Compliant: Swatch labels and overlays dynamically calculate contrast to guarantee readability."
+    ],
+    "rules": [
+      {
+        "name": "The Swatch Hero Rule",
+        "body": "Interface chrome must never use saturated decorative background colors. The accent color is reserved strictly for interactive affordances and key status indicators. Color swatches are the sole heroes of the viewport.",
+        "section": "colors"
+      },
+      {
+        "name": "The Code Integrity Rule",
+        "body": "Every color value (HEX, RGB, HSL, HSV, CMYK), contrast ratio, and WCAG rating must strictly render in JetBrains Mono. Numbers must never shift width across state changes.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tactile Click Rule",
+        "body": "Interactive elements with offset shadows must physically translate translate(-1px, -1px) on hover and translate(1px, 1px) on active press, reducing the perceived shadow depth to simulate physical tactile engagement.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do maintain high contrast between text overlays and active color swatches using relative luminance calculations.",
+      "Do preserve the tactile 2px offset shadow and 1px physical translation on interactive buttons.",
+      "Do format all color codes and numerical outputs in JetBrains Mono with quick-copy affordances.",
+      "Do ensure dark mode uses intentional zinc/slate tones rather than pure inverted blacks."
+    ],
+    "donts": [
+      "Don't use diffuse fuzzy drop shadows, frosted glassmorphism, or decorative colored gradients on chrome surfaces.",
+      "Don't use emoji as user interface icons; use tree-shaken Lucide icons exclusively.",
+      "Don't let decorative accents overpower color swatches on screen.",
+      "Don't trigger destructive palette deletions without explicit confirmation dialogs."
+    ]
+  }
+}

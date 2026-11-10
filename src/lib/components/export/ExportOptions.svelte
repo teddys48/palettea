@@ -67,7 +67,7 @@
           placeholder="color"
           class="w-full px-2.5 py-1.5 text-xs font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
         />
-        <span class="text-[10px] font-mono text-muted-foreground block">e.g. --{cssVarOptions.prefix || 'custom'}-primary</span>
+        <span class="text-xs font-mono text-muted-foreground block">e.g. --{cssVarOptions.prefix || 'custom'}-primary</span>
       </div>
 
       <div class="space-y-1">
@@ -80,7 +80,7 @@
           placeholder=":root"
           class="w-full px-2.5 py-1.5 text-xs font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
         />
-        <span class="text-[10px] font-mono text-muted-foreground block">Scope selector block</span>
+        <span class="text-xs font-mono text-muted-foreground block">Scope selector block</span>
       </div>
 
       <div class="flex items-center sm:pt-5">
@@ -109,7 +109,7 @@
           placeholder="color"
           class="w-full px-2.5 py-1.5 text-xs font-mono rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
         />
-        <span class="text-[10px] font-mono text-muted-foreground block">e.g. .{cssClassOptions.prefix || 'custom'}-primary</span>
+        <span class="text-xs font-mono text-muted-foreground block">e.g. .{cssClassOptions.prefix || 'custom'}-primary</span>
       </div>
 
       <div class="space-y-1">
@@ -124,7 +124,7 @@
           <option value="text-only">Text Color Only (.name)</option>
           <option value="bg-only">Background Color Only (.name-background)</option>
         </select>
-        <span class="text-[10px] font-mono text-muted-foreground block">CSS property declarations</span>
+        <span class="text-xs font-mono text-muted-foreground block">CSS property declarations</span>
       </div>
 
       <div class="flex items-center sm:pt-5">

@@ -23,9 +23,9 @@
   }
 </script>
 
-<div class="rounded-2xl border border-border bg-surface p-5 sm:p-6 shadow-neo space-y-5">
+<div class="rounded-2xl border border-border bg-surface shadow-neo overflow-hidden">
   <!-- Header with Preview Mode Tabs -->
-  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 sm:p-6 border-b border-border">
     <div>
       <h3 class="text-sm font-bold uppercase tracking-wider text-foreground font-mono flex items-center gap-2">
         <Eye class="w-4 h-4 text-accent" aria-hidden="true" />
@@ -64,7 +64,7 @@
 
   <!-- Dynamic Preview Canvas Canvas -->
   <div
-    class="w-full rounded-2xl p-6 sm:p-8 transition-colors duration-150 border border-border/80 shadow-inner overflow-hidden min-h-[300px] flex flex-col justify-center"
+    class="w-full p-6 sm:p-8 transition-colors duration-150 min-h-[300px] flex flex-col justify-center"
     style="background-color: {backgroundHex}; color: {foregroundHex};"
   >
     {#if previewMode === 'ui'}
@@ -73,7 +73,7 @@
         <!-- Heading Sample (Large Text >= 24px) -->
         <div class="space-y-1.5">
           <span
-            class="text-[11px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border inline-block"
+            class="text-xs font-mono uppercase tracking-wider px-2 py-0.5 rounded border inline-block"
             style="border-color: {foregroundHex}; opacity: 0.85;"
           >
             Large Text Sample (≥ 18pt / 24px)
@@ -137,7 +137,7 @@
             <Heart class="w-4 h-4 shrink-0" aria-hidden="true" />
             <span class="opacity-80">user@example.com</span>
           </div>
-          <span class="text-[11px] font-mono opacity-75 block">
+          <span class="text-xs font-mono opacity-85 block">
             Border and icon must meet 3:1 non-text contrast under WCAG 2.2 SC 1.4.11.
           </span>
         </div>

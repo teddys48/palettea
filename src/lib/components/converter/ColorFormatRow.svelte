@@ -74,7 +74,7 @@
           {label}
         </span>
         {#if isActiveInput}
-          <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-accent/15 text-accent font-semibold">
+          <span class="text-xs font-mono uppercase px-1.5 py-0.5 rounded bg-accent/15 text-accent font-semibold">
             Active Source
           </span>
         {/if}
@@ -87,7 +87,7 @@
             onclick={handleSelect}
             title="Set {label} as active input format"
             aria-label="Edit {label} format"
-            class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono border border-border bg-background hover:bg-surface text-muted-foreground hover:text-foreground transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-mono border border-border bg-background hover:bg-surface text-muted-foreground hover:text-foreground transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <Edit3 class="w-3 h-3" aria-hidden="true" />
             <span class="hidden sm:inline">Edit</span>
@@ -98,7 +98,7 @@
           type="button"
           onclick={handleCopy}
           aria-label="Copy {label} value {displayValue}"
-          class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {isCopied ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 font-bold' : copyFailed ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30' : 'bg-background hover:bg-surface text-muted-foreground hover:text-foreground border-border'}"
+          class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-mono border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {isCopied ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 font-bold' : copyFailed ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30' : 'bg-background hover:bg-surface text-muted-foreground hover:text-foreground border-border'}"
         >
           {#if isCopied}
             <Check class="w-3 h-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
@@ -121,7 +121,7 @@
     </div>
   </div>
 
-  <p class="text-[11px] text-muted-foreground mt-3 pt-2 border-t border-border/70">
+  <p class="text-xs text-muted-foreground mt-3 pt-2 border-t border-border/70">
     {description}
   </p>
 </div>

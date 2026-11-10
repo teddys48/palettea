@@ -254,7 +254,7 @@
             Colors & Swatches
           </span>
           {#if isEditing}
-            <span class="text-[11px] font-mono text-muted-foreground">Use arrows to reorder colors</span>
+            <span class="text-xs font-mono text-muted-foreground">Use arrows to reorder colors</span>
           {/if}
         </div>
 
@@ -354,7 +354,7 @@
                 </div>
               {:else}
                 <!-- Integration Action Buttons (Inspector, Contrast, Converter) -->
-                <div class="pt-2 border-t border-border grid grid-cols-3 gap-1 text-[11px] font-mono">
+                <div class="pt-2 border-t border-border grid grid-cols-3 gap-1 text-xs font-mono">
                   <button
                     type="button"
                     onclick={() => handleInspect(cleanHex)}

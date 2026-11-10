@@ -95,7 +95,7 @@
               type="button"
               onclick={() => handleCopy(item.id, item.value)}
               aria-label="Copy {item.label} value {item.value}"
-              class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-mono border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {copiedFormat === item.id ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' : 'bg-background hover:bg-surface-hover text-muted-foreground hover:text-foreground border-border'}"
+              class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-mono border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent {copiedFormat === item.id ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' : 'bg-background hover:bg-surface-hover text-muted-foreground hover:text-foreground border-border'}"
             >
               {#if copiedFormat === item.id}
                 <Check class="w-3 h-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
@@ -112,7 +112,7 @@
           </p>
         </div>
 
-        <p class="text-[11px] text-muted-foreground mt-3 pt-2 border-t border-border/60">
+        <p class="text-xs text-muted-foreground mt-3 pt-2 border-t border-border/60">
           {item.description}
         </p>
       </div>

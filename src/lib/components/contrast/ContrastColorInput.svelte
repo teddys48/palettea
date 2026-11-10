@@ -135,14 +135,14 @@
 
     <!-- Dual Inputs Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
-      <!-- Foreground (Text) Input Card -->
-      <div class="space-y-2 rounded-xl border border-border bg-background/60 p-4 relative focus-within:border-accent transition-colors">
+      <!-- Foreground (Text) Input Column -->
+      <div class="space-y-2 relative">
         <div class="flex items-center justify-between">
           <label for="fg-hex-input" class="text-xs font-mono font-bold uppercase text-foreground flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full border border-border" style="background-color: {fgPickerValue};"></span>
             <span>Text (Foreground)</span>
           </label>
-          <span class="text-[11px] font-mono text-muted-foreground">
+          <span class="text-xs font-mono text-muted-foreground">
             Luminance: {fgLuminance.toFixed(3)}
           </span>
         </div>
@@ -184,21 +184,21 @@
         </div>
 
         {#if fgError}
-          <p class="text-[11px] font-mono text-red-600 dark:text-red-400 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
+          <p class="text-xs font-mono text-red-600 dark:text-red-400 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
             <AlertCircle class="w-3 h-3 shrink-0" aria-hidden="true" />
             <span>Invalid HEX format (enter 3 or 6 hex digits)</span>
           </p>
         {/if}
       </div>
 
-      <!-- Background Input Card -->
-      <div class="space-y-2 rounded-xl border border-border bg-background/60 p-4 relative focus-within:border-accent transition-colors">
+      <!-- Background Input Column -->
+      <div class="space-y-2 relative">
         <div class="flex items-center justify-between">
           <label for="bg-hex-input" class="text-xs font-mono font-bold uppercase text-foreground flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full border border-border" style="background-color: {bgPickerValue};"></span>
             <span>Background</span>
           </label>
-          <span class="text-[11px] font-mono text-muted-foreground">
+          <span class="text-xs font-mono text-muted-foreground">
             Luminance: {bgLuminance.toFixed(3)}
           </span>
         </div>
@@ -240,7 +240,7 @@
         </div>
 
         {#if bgError}
-          <p class="text-[11px] font-mono text-red-600 dark:text-red-400 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
+          <p class="text-xs font-mono text-red-600 dark:text-red-400 flex items-center gap-1 mt-1 animate-in fade-in duration-150">
             <AlertCircle class="w-3 h-3 shrink-0" aria-hidden="true" />
             <span>Invalid HEX format (enter 3 or 6 hex digits)</span>
           </p>

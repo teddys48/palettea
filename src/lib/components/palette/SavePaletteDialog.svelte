@@ -211,7 +211,7 @@
           <span class="text-xs font-mono uppercase tracking-wider font-semibold text-foreground">
             Palette Colors ({colors.length})
           </span>
-          <span class="text-[11px] font-mono text-muted-foreground">Min 1 color</span>
+          <span class="text-xs font-mono text-muted-foreground">Min 1 color</span>
         </div>
 
         <!-- Color Swatches Row -->
@@ -225,7 +225,7 @@
               <div class="flex-1 min-w-0">
                 <span class="block text-xs font-mono font-bold text-foreground truncate">{color.hex}</span>
                 {#if color.name}
-                  <span class="block text-[10px] text-muted-foreground truncate">{color.name}</span>
+                  <span class="block text-xs text-muted-foreground truncate">{color.name}</span>
                 {/if}
               </div>
               <button

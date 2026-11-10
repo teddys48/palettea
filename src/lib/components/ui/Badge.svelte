@@ -17,8 +17,8 @@
 
   const variantStyles = {
     default: 'bg-surface border-border text-foreground',
-    accent: 'bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/70 dark:border-indigo-800/80 dark:text-indigo-300',
-    neutral: 'bg-zinc-100 border-zinc-200 text-zinc-700 dark:bg-zinc-800/70 dark:border-zinc-700 dark:text-zinc-300',
+    accent: 'bg-accent/10 border-accent/30 text-accent dark:bg-accent/20 dark:border-accent/40 dark:text-accent-hover',
+    neutral: 'bg-surface-hover border-border text-foreground/85 dark:bg-surface-hover dark:border-border dark:text-foreground/85',
     outline: 'border-border text-foreground bg-transparent',
   };
 

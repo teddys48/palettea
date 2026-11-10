@@ -69,11 +69,11 @@
       >
         <div class="flex items-center justify-between w-full">
           <span class="text-xs font-mono font-bold text-foreground">{tab.label}</span>
-          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border bg-background text-muted-foreground">
+          <span class="text-xs font-mono px-1.5 py-0.5 rounded border border-border bg-background text-muted-foreground">
             {tab.extension}
           </span>
         </div>
-        <p class="text-[11px] text-muted-foreground line-clamp-1">{tab.description}</p>
+        <p class="text-xs text-muted-foreground line-clamp-1">{tab.description}</p>
       </button>
     {/each}
   </div>

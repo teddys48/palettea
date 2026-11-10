@@ -37,10 +37,10 @@
   };
 
   const sizeStyles = {
-    sm: 'text-xs px-3 py-1.5 rounded-lg gap-1.5',
-    md: 'text-sm px-4 py-2 rounded-lg gap-2',
-    lg: 'text-base px-5 py-2.5 rounded-xl gap-2.5 font-medium',
-    icon: 'p-2 rounded-lg',
+    sm: 'text-xs px-3.5 py-1.5 min-h-[36px] sm:min-h-0 rounded-lg gap-1.5',
+    md: 'text-sm px-4 py-2 min-h-[40px] sm:min-h-0 rounded-lg gap-2',
+    lg: 'text-base px-5 py-2.5 min-h-[44px] rounded-xl gap-2.5 font-medium',
+    icon: 'p-2 min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg',
   };
 </script>
 

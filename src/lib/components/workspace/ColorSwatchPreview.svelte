@@ -36,13 +36,13 @@
   }
 </script>
 
-<div class="w-full rounded-2xl border border-border bg-surface p-4 sm:p-6 shadow-neo transition-all">
+<div class="w-full space-y-4">
   <!-- Header of Palette Card -->
   <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
     <div class="flex items-center gap-2.5">
-      <div class="flex h-3 w-3 rounded-full bg-accent animate-pulse" aria-hidden="true"></div>
+      <div class="flex h-2.5 w-2.5 rounded-full bg-accent" aria-hidden="true"></div>
       <h2 class="text-base sm:text-lg font-bold tracking-tight text-foreground">{paletteName}</h2>
-      <span class="rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 text-[11px] font-mono text-zinc-600 dark:text-zinc-400 uppercase">
+      <span class="rounded border border-border bg-surface-hover px-2 py-0.5 text-xs font-mono text-foreground/80 uppercase">
         {paletteTag}
       </span>
     </div>
@@ -71,7 +71,7 @@
           <!-- Top Tag inside Swatch -->
           <div class="flex items-center justify-between w-full">
             <span
-              class="rounded px-1.5 py-0.5 text-[10px] font-mono font-medium backdrop-blur-sm {swatch.isLight ? 'bg-black/10 text-neutral-900 border border-black/10' : 'bg-white/20 text-white border border-white/20'}"
+              class="rounded px-2 py-0.5 text-xs font-mono font-bold shadow-xs backdrop-blur-sm {swatch.isLight ? 'bg-black/15 text-neutral-950 border border-black/20' : 'bg-black/40 text-white border border-white/30'}"
             >
               {swatch.role}
             </span>
@@ -87,7 +87,7 @@
           <!-- Bottom Action inside Swatch: Click to Inspect hint -->
           <div class="flex items-center justify-start">
             <span
-              class="text-[10px] font-mono opacity-0 group-hover:opacity-90 transition-opacity px-1.5 py-0.5 rounded backdrop-blur-sm {swatch.isLight ? 'bg-black/10 text-neutral-900' : 'bg-white/20 text-white'}"
+              class="text-xs font-mono opacity-0 group-hover:opacity-90 transition-opacity px-1.5 py-0.5 rounded backdrop-blur-sm {swatch.isLight ? 'bg-black/10 text-neutral-900' : 'bg-white/20 text-white'}"
             >
               Click to Inspect
             </span>
@@ -114,10 +114,10 @@
           >
             {#if isCopied}
               <Check class="w-3 h-3" aria-hidden="true" />
-              <span class="text-[10px]">Copied</span>
+              <span class="text-xs">Copied</span>
             {:else}
               <Copy class="w-3 h-3 text-muted-foreground" aria-hidden="true" />
-              <span class="text-[10px]">Copy</span>
+              <span class="text-xs">Copy</span>
             {/if}
           </button>
         </div>
@@ -131,7 +131,7 @@
       <Sparkles class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
       <span>Curated aesthetic preset palette. Click any color to inspect, convert, or verify contrast.</span>
     </div>
-    <span class="text-[11px] bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">
+    <span class="text-xs bg-surface-hover px-2 py-0.5 rounded border border-border text-foreground/80">
       Click to Inspect in Color Inspector
     </span>
   </div>

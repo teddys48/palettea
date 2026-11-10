@@ -138,9 +138,9 @@
         <div class="space-y-1">
           <div class="flex items-center justify-between">
             <span class="text-xs font-mono font-bold text-foreground">{item.name}</span>
-            <span class="text-[10px] font-mono text-muted-foreground uppercase">{useCssSyntax ? 'CSS' : 'Numeric'}</span>
+            <span class="text-xs font-mono text-muted-foreground uppercase">{useCssSyntax ? 'CSS' : 'Numeric'}</span>
           </div>
-          <p class="text-[11px] text-muted-foreground line-clamp-1">{item.description}</p>
+          <p class="text-xs text-muted-foreground line-clamp-1">{item.description}</p>
         </div>
 
         <div class="mt-3 pt-2 border-t border-border/50 flex items-center justify-between gap-2">

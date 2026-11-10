@@ -50,7 +50,7 @@
         </div>
       {/if}
 
-      <div class="text-muted-foreground text-[11px]">
+      <div class="text-muted-foreground text-xs">
         <span>{lineCount} lines</span>
         <span class="mx-1">•</span>
         <span>{charCount} chars</span>

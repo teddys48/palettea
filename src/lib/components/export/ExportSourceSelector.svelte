@@ -106,7 +106,7 @@
   }
 </script>
 
-<div class="rounded-2xl border border-border bg-surface p-5 shadow-sm space-y-5">
+<div class="space-y-5">
   <!-- Source Tabs -->
   <div>
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
@@ -132,7 +132,7 @@
       >
         <Layers class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span>Saved Palettes</span>
-        <span class="text-[10px] px-1.5 py-0.2 rounded bg-zinc-100 dark:bg-zinc-800 text-muted-foreground font-bold">
+        <span class="text-xs px-1.5 py-0.2 rounded bg-surface-hover text-muted-foreground font-bold">
           {paletteStore.palettes.length}
         </span>
       </button>
@@ -171,7 +171,7 @@
 
   <!-- Sub-selection when 'saved' or 'preset' is active -->
   {#if activeSourceType === 'saved'}
-    <div class="p-3 rounded-xl bg-background border border-border space-y-2">
+    <div class="p-3 rounded-xl bg-surface-hover/60 space-y-2">
       {#if paletteStore.palettes.length === 0}
         <p class="text-xs text-muted-foreground">
           No saved palettes found in Palette Management. Save a palette first, or use a curated preset / scheme.
@@ -219,12 +219,12 @@
       {#each payload.colors as item, index (item.hex + index)}
         {@const contrast = getContrastColor(item.hex)}
         <div
-          class="relative rounded-xl border border-border shadow-neo p-3 flex flex-col justify-between h-24 transition-transform hover:-translate-y-0.5 group overflow-hidden"
+          class="relative rounded-lg p-3 flex flex-col justify-between h-24 transition-transform hover:-translate-y-0.5 group overflow-hidden"
           style="background-color: {item.hex}; color: {contrast};"
         >
           <!-- Top row: name and copy popover -->
           <div class="flex items-start justify-between gap-1">
-            <span class="text-[11px] font-semibold tracking-tight truncate" title={item.name || `Color ${index + 1}`}>
+            <span class="text-xs font-semibold tracking-tight truncate" title={item.name || `Color ${index + 1}`}>
               {item.name || `Color ${index + 1}`}
             </span>
 

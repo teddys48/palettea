@@ -235,7 +235,7 @@
                       <h4 class="text-sm font-bold text-foreground tracking-tight truncate">
                         {col.name}
                       </h4>
-                      <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border border-border bg-background text-muted-foreground">
+                      <span class="text-xs font-mono px-2 py-0.5 rounded-full border border-border bg-background text-muted-foreground">
                         {count} {count === 1 ? 'palette' : 'palettes'}
                       </span>
                     </div>

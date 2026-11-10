@@ -37,7 +37,7 @@
     </div>
 
     <div class="flex items-center gap-1.5">
-      <span class="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded-md border border-border bg-background text-muted-foreground">
+      <span class="inline-flex items-center gap-1 text-xs font-mono px-2 py-0.5 rounded-md border border-border bg-background text-muted-foreground">
         <ShieldCheck class="w-3 h-3 text-emerald-500" aria-hidden="true" />
         <span>Verified Engine</span>
       </span>
@@ -46,7 +46,7 @@
 
   {#if currentRatio >= 7.0}
     <!-- Already exceeds AAA -->
-    <div class="rounded-xl border border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20 p-4 flex items-center gap-3">
+    <div class="rounded-xl bg-emerald-500/10 p-4 flex items-center gap-3">
       <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
         <Check class="w-4 h-4" aria-hidden="true" />
       </div>
@@ -70,7 +70,7 @@
         <div class="rounded-xl border border-border bg-background/50 p-4 flex flex-col justify-between gap-3 hover:border-border-strong transition-all">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="inline-flex items-center gap-1 text-[11px] font-mono uppercase font-bold px-2 py-0.5 rounded bg-surface border border-border text-foreground">
+              <span class="inline-flex items-center gap-1 text-xs font-mono uppercase font-bold px-2 py-0.5 rounded bg-surface border border-border text-foreground">
                 {suggestion.label}
               </span>
 
@@ -91,7 +91,7 @@
                   style="background-color: {suggestion.currentHex};"
                   title="Current: {suggestion.currentHex}"
                 ></span>
-                <span class="text-[11px] font-mono line-through text-muted-foreground">
+                <span class="text-xs font-mono line-through text-muted-foreground">
                   {suggestion.currentHex}
                 </span>
               </div>

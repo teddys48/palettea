@@ -132,7 +132,7 @@
   {/if}
 
   <!-- Configuration Bar -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-xl bg-background border border-border">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <div class="flex items-center gap-2">
       <label for="token-prefix" class="text-xs font-mono text-muted-foreground whitespace-nowrap">Variable Prefix:</label>
       <input
@@ -191,7 +191,7 @@
                     class="px-1.5 py-0.5 text-xs font-mono font-bold rounded border border-transparent hover:border-border focus:border-accent bg-transparent text-foreground focus:outline-none"
                   />
                 </div>
-                <div class="text-[11px] font-mono text-muted-foreground truncate">
+                <div class="text-xs font-mono text-muted-foreground truncate">
                   {token.hex} {token.description ? `• ${token.description}` : ''}
                 </div>
               </div>
@@ -214,12 +214,12 @@
 
   <!-- Unassigned Semantic Roles Warning/Helper -->
   {#if unassignedRoles.length > 0 && colors.length > 0}
-    <div class="p-3 rounded-xl border border-border bg-background space-y-2">
+    <div class="p-3 rounded-xl bg-surface-hover/60 space-y-2">
       <div class="flex items-center gap-1.5 text-xs font-mono text-muted-foreground">
         <Info class="w-3.5 h-3.5 text-accent" aria-hidden="true" />
         <span class="font-semibold">Unassigned Standard Roles ({unassignedRoles.length}):</span>
       </div>
-      <p class="text-[11px] text-muted-foreground">
+      <p class="text-xs text-muted-foreground">
         You can map available palette colors to any of these standard design roles:
       </p>
 
@@ -228,7 +228,7 @@
           <button
             type="button"
             onclick={() => assignRoleToSlot(role.role, colors[0]?.hex || '#4F46E5')}
-            class="px-2 py-1 rounded-lg border border-border bg-surface hover:border-accent text-[11px] font-mono text-foreground cursor-pointer transition-colors"
+            class="px-2 py-1 rounded-lg border border-border bg-surface hover:border-accent text-xs font-mono text-foreground cursor-pointer transition-colors"
             title={role.description}
           >
             + {role.label}

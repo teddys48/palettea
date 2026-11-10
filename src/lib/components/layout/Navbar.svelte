@@ -51,7 +51,7 @@
         </div>
         <div class="flex flex-col">
           <span class="text-lg font-bold tracking-tight text-foreground">Palettea</span>
-          <span class="text-[10px] uppercase font-mono tracking-wider text-muted-foreground -mt-1">Color Toolkit</span>
+          <span class="text-xs uppercase font-mono tracking-wider text-muted-foreground -mt-0.5">Color Toolkit</span>
         </div>
       </a>
       <Badge variant="accent" size="sm" class="hidden sm:inline-flex">v1.0</Badge>
@@ -68,7 +68,7 @@
         >
           {item.label}
           {#if item.badge}
-            <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-400">
+            <span class="text-xs font-mono uppercase px-1.5 py-0.5 rounded border border-border bg-surface-hover text-foreground/80">
               {item.badge}
             </span>
           {/if}
@@ -116,7 +116,7 @@
         >
           <span>{item.label}</span>
           {#if item.badge}
-            <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-400">
+            <span class="text-xs font-mono uppercase px-1.5 py-0.5 rounded border border-border bg-surface-hover text-foreground/80">
               {item.badge}
             </span>
           {/if}

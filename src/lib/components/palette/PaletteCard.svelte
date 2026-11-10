@@ -109,7 +109,7 @@
 
     <!-- Swatches Visualization Bar -->
     <div
-      class="h-14 sm:h-16 w-full rounded-xl overflow-hidden flex border border-black/10 dark:border-white/10 shadow-inner my-3"
+      class="h-14 sm:h-16 w-full rounded-lg overflow-hidden flex my-3"
       aria-label="Color swatches preview"
     >
       {#each palette.colors as color, i (color.id || color.hex + '-' + i)}
@@ -121,7 +121,7 @@
         >
           <!-- Hover mini label -->
           <div
-            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/swatch:opacity-100 transition-opacity text-[10px] font-mono font-bold tracking-tight px-0.5 truncate"
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/swatch:opacity-100 transition-opacity text-xs font-mono font-bold tracking-tight px-0.5 truncate"
             style="color: {isLight ? '#000000' : '#FFFFFF'};"
           >
             {color.hex}

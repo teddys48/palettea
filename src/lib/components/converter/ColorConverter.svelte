@@ -169,9 +169,10 @@
     <!-- Top Row of Preview Banner -->
     <div class="flex items-center justify-between gap-3">
       <div
-        class="inline-flex items-center gap-2 px-3 py-1 rounded-full backdrop-blur-md bg-black/20 text-white border border-white/20 text-xs font-mono font-semibold"
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full backdrop-blur-md text-xs font-mono font-semibold"
+        style="background-color: {previewTextColor === '#000000' ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}; color: {previewTextColor}; border: 1px solid {previewTextColor === '#000000' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.3)'};"
       >
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+        <span class="w-2 h-2 rounded-full {previewTextColor === '#000000' ? 'bg-emerald-600' : 'bg-emerald-400'}" aria-hidden="true"></span>
         <span>Live Color Preview</span>
       </div>
 
@@ -180,7 +181,8 @@
           type="button"
           onclick={handleSendToInspector}
           title="Inspect this color in Color Inspector"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl backdrop-blur-md bg-white/20 hover:bg-white/30 text-white border border-white/30 text-xs font-mono font-bold transition-all cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl backdrop-blur-md text-xs font-mono font-bold transition-all cursor-pointer shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current"
+          style="background-color: {previewTextColor === '#000000' ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}; color: {previewTextColor}; border: 1px solid {previewTextColor === '#000000' ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.3)'};"
         >
           <Search class="w-3.5 h-3.5" aria-hidden="true" />
           <span>Inspect in Detail</span>
@@ -202,17 +204,17 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-mono opacity-90">
+      <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-mono opacity-95">
         <div>
-          <span class="opacity-70">RGB: </span>
+          <span class="opacity-90">RGB: </span>
           <span class="font-bold">{lastValidResult.rgb.value}</span>
         </div>
         <div>
-          <span class="opacity-70">HSL: </span>
+          <span class="opacity-90">HSL: </span>
           <span class="font-bold">{lastValidResult.hsl.value}</span>
         </div>
         <div>
-          <span class="opacity-70">CMYK: </span>
+          <span class="opacity-90">CMYK: </span>
           <span class="font-bold">{lastValidResult.cmyk.value}</span>
         </div>
       </div>
